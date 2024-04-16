@@ -43,8 +43,8 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const SizedBox(
-                    height: 25,
+                  SizedBox(
+                    height: mediaQuery.height * 0.04,
                   ),
                   Padding(
                     padding:
@@ -70,7 +70,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   Container(
                     margin: const EdgeInsets.all(20),
-                    height: mediaQuery.height * 0.72,
                     decoration: BoxDecoration(
                       color: const Color(0xff002445).withOpacity(0.45),
                       borderRadius: BorderRadius.circular(10),
@@ -94,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                             hintText: "Email",
                           ),
-                          const SizedBox(height: 13),
+                          const SizedBox(height: 18),
                           CustomTextFormField(
                             controller: passwordController,
                             hintText: "Password",
@@ -234,23 +233,27 @@ class _LoginScreenState extends State<LoginScreen> {
 
       EasyLoading.show();
       try {
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
+        UserCredential user =
+            await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: email,
           password: password,
         );
         EasyLoading.dismiss();
         SnackBarService.showSuccessMessage("successfully signed in");
-        Navigator.pushReplacementNamed(context, HomeLayout.routeName);
+        print(user.user?.displayName);
+        Navigator.pushReplacementNamed(
+          context,
+          HomeLayout.routeName,
+          arguments: user.user!.displayName,
+        );
       } on FirebaseAuthException catch (e) {
+        EasyLoading.dismiss();
         if (e.code == 'user-not-found') {
-          EasyLoading.dismiss();
           SnackBarService.showErrorMessage('No user found for that email');
         } else if (e.code == 'wrong-password') {
-          EasyLoading.dismiss();
           SnackBarService.showErrorMessage(
               'Wrong password provided for that user');
-        } else if (e.code == 'INVALID_LOGIN_CREDENTIALS') {
-          EasyLoading.dismiss();
+        } else {
           SnackBarService.showErrorMessage('Wrong email or password');
         }
       }

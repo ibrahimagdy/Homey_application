@@ -19,8 +19,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
-  bool isViasble = true;
-  bool confirmPasswordVisale = true;
+  bool isVisable = true;
+  bool confirmPasswordVisable = true;
   var formKey = GlobalKey<FormState>();
 
   @override
@@ -56,9 +56,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  SizedBox(height: mediaQuery.height * 0.06),
                   Padding(
                     padding: const EdgeInsets.only(left: 30.0),
                     child: Text(
@@ -77,7 +75,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   Container(
                     margin: const EdgeInsets.all(20),
-                    height: mediaQuery.height * 0.67,
                     decoration: BoxDecoration(
                       color: const Color(0xff002445).withOpacity(0.45),
                       borderRadius: BorderRadius.circular(10),
@@ -101,7 +98,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             },
                             hintText: "Email",
                           ),
-                          const SizedBox(height: 13),
+                          const SizedBox(height: 18),
                           CustomTextFormField(
                             controller: nameController,
                             validator: (value) {
@@ -112,11 +109,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             },
                             hintText: "Name",
                           ),
-                          const SizedBox(height: 13),
+                          const SizedBox(height: 18),
                           CustomTextFormField(
                             controller: passwordController,
                             hintText: "Password",
-                            obscureText: isViasble,
+                            obscureText: isVisable,
                             validator: (value) {
                               if (value == null || value.trim().isEmpty) {
                                 return "You must enter your password";
@@ -130,13 +127,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             },
                             suffixIcon: GestureDetector(
                               onTap: () {
-                                isViasble = !isViasble;
+                                isVisable = !isVisable;
                                 setState(() {});
                               },
                               child: Padding(
                                 padding: const EdgeInsets.only(right: 8),
                                 child: Text(
-                                  isViasble == true ? "View" : "Hide",
+                                  isVisable == true ? "View" : "Hide",
                                   style: const TextStyle(
                                       color: Color(0xff14213D),
                                       fontSize: 13,
@@ -145,29 +142,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                             ),
                           ),
-                          const SizedBox(height: 13),
+                          const SizedBox(height: 18),
                           CustomTextFormField(
                             controller: confirmPasswordController,
                             hintText: "Confirm Password",
-                            obscureText: confirmPasswordVisale,
+                            obscureText: confirmPasswordVisable,
                             validator: (value) {
                               if (value == null || value.trim().isEmpty) {
                                 return "You must enter your password";
                               }
                               if (value != passwordController.text) {
-                                return "Password does't Match as above";
+                                return "Password doesn't Match as above";
                               }
                               return null;
                             },
                             suffixIcon: GestureDetector(
                               onTap: () {
-                                confirmPasswordVisale = !confirmPasswordVisale;
+                                confirmPasswordVisable =
+                                    !confirmPasswordVisable;
                                 setState(() {});
                               },
                               child: Padding(
                                 padding: const EdgeInsets.only(right: 8),
                                 child: Text(
-                                  confirmPasswordVisale == true
+                                  confirmPasswordVisable == true
                                       ? "View"
                                       : "Hide",
                                   style: const TextStyle(
@@ -209,8 +207,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                             onPressed: () {
                               register();
-                              // Navigator.pushNamed(
-                              //     context, LoginScreen.routeName);
                             },
                             child: Text("Agree and Continue",
                                 style: theme.textTheme.bodySmall!.copyWith(
@@ -231,6 +227,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   void register() async {
     if (formKey.currentState!.validate()) {
+      String name = nameController.text.trim();
       String email = emailController.text.trim();
       String password = passwordController.text.trim();
       if (email.isEmpty) {
@@ -243,8 +240,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
       }
       EasyLoading.show();
       try {
-        await FirebaseAuth.instance
+        UserCredential user = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
+        await user.user!.updateDisplayName(name);
         EasyLoading.dismiss();
         SnackBarService.showSuccessMessage(
             "You have successfully created a new account");

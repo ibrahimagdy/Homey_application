@@ -19,6 +19,10 @@ class CustomTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     return TextFormField(
+      style: theme.textTheme.bodyLarge!.copyWith(
+        fontSize: 17,
+      ),
+      enableSuggestions: true,
       validator: validator,
       controller: controller,
       obscureText: obscureText,
@@ -37,7 +41,7 @@ class CustomTextFormField extends StatelessWidget {
             ),
           ),
           focusedBorder:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+          OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
     );
   }
 }

@@ -78,7 +78,7 @@ class SnackBarService {
         );
       },
       duration: const Duration(
-        seconds: 5,
+        seconds: 2,
       ),
       dismissDirections: [DismissDirection.endToStart],
     );

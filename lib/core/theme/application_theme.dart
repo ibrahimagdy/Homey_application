@@ -19,6 +19,11 @@ class ApplicationTheme {
           fontSize: 20,
           fontWeight: FontWeight.bold,
         ),
+        bodyLarge: GoogleFonts.poppins(
+          color: const Color(0xff14213D),
+          fontSize: 25,
+          fontWeight: FontWeight.bold,
+        ),
         bodyMedium: GoogleFonts.poppins(
           color: const Color(0xff7DD7DF),
           fontSize: 16,
@@ -44,5 +49,19 @@ class ApplicationTheme {
           fontSize: 14,
           fontWeight: FontWeight.w500,
         )),
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      type: BottomNavigationBarType.fixed,
+      backgroundColor: Colors.transparent,
+      selectedIconTheme: IconThemeData(
+        color: Color(0xff7DD7DF),
+        size: 45,
+      ),
+      selectedItemColor: Color(0xff7DD7DF),
+      unselectedIconTheme: IconThemeData(
+        color: Color(0xff0A1128),
+        size: 40,
+      ),
+      unselectedItemColor: Color(0xff0A1128),
+    ),
   );
 }
