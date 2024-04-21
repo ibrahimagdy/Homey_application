@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:homey/pages/home_screen/models/apartments_model.dart';
+import 'package:homey/pages/home_screen/widgets/apartment_item.dart';
 
-import 'model/category_data.dart';
+import 'models/category_data.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -26,23 +28,52 @@ class _HomeViewState extends State<HomeView> {
           categoryName: "Apartments",
           categoryImage: "assets/images/apartments_pic.png"),
     ];
+    List<ApartmentModel> apartments = [
+      const ApartmentModel(
+        mainImage: "assets/images/m1/m2.jpeg",
+        price: "4100 EGP/month",
+        address: "Cairo,5th settlement",
+        image1: "assets/images/m1/m1.jpeg",
+        image2: "assets/images/m1/m3.jpeg",
+        image3: "assets/images/m1/m4.jpeg",
+        image4: "assets/images/m1/m5.jpeg",
+        image5: "assets/images/m1/m9.jpeg",
+        image6: "assets/images/m1/m6.jpeg",
+        image7: "assets/images/m1/m7.jpeg",
+        image8: "assets/images/m1/m8.jpeg",
+      ),
+      const ApartmentModel(
+        mainImage: "assets/images/m2/m1.jpeg",
+        price: "3650 EGP/month",
+        address: "Mansoura,toshka street",
+        image1: "assets/images/m2/m2.jpeg",
+        image2: "assets/images/m2/m3.jpeg",
+        image3: "assets/images/m2/m4.jpeg",
+        image4: "assets/images/m2/m5.jpeg",
+        image5: "assets/images/m2/m6.jpeg",
+        image6: "assets/images/m2/m7.jpeg",
+      ),
+    ];
     return SafeArea(
       child: Column(
         children: [
-          ListTile(
-            leading: Image.asset("assets/images/profile_pic.png"),
-            title: Text(
-              "Hi, $name",
-              style: theme.textTheme.bodyMedium!.copyWith(
-                color: Colors.white,
-                fontSize: 18,
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: ListTile(
+              leading: Image.asset("assets/images/profile_pic.png"),
+              title: Text(
+                "Hi, $name",
+                style: theme.textTheme.bodyMedium!.copyWith(
+                  color: Colors.white,
+                  fontSize: 18,
+                ),
               ),
-            ),
-            trailing: CircleAvatar(
-              backgroundColor: Colors.white,
-              child: Image.asset(
-                "assets/images/notification.png",
-                color: Colors.black,
+              trailing: CircleAvatar(
+                backgroundColor: Colors.white,
+                child: Image.asset(
+                  "assets/images/notification.png",
+                  color: Colors.black,
+                ),
               ),
             ),
           ),
@@ -67,7 +98,7 @@ class _HomeViewState extends State<HomeView> {
                 prefixIcon: Image.asset("assets/images/search_icon.png"),
                 suffixIcon: Image.asset("assets/images/filter_icon.png"),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(27),
+                  borderRadius: BorderRadius.circular(28),
                 ),
               ),
             ),
@@ -164,11 +195,16 @@ class _HomeViewState extends State<HomeView> {
                       ],
                     ),
                   ),
-                  // ListView.builder(
-                  //   itemBuilder: (context, index) {
-                  //     return
-                  //   },
-                  // ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: apartments.length,
+                      itemBuilder: (context, index) {
+                        return ApartmentItem(
+                          apartmentModel: apartments[index],
+                        );
+                      },
+                    ),
+                  ),
                 ],
               ),
             ),

@@ -5,6 +5,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:homey/core/services/loading_service.dart';
 import 'package:homey/core/theme/application_theme.dart';
 import 'package:homey/layout/home_layout.dart';
+import 'package:homey/pages/details_screen/details_screen.dart';
 import 'package:homey/pages/login_screen/login_screen.dart';
 import 'package:homey/pages/onBoarding_screens/onboarding_screens.dart';
 import 'package:homey/pages/register_screen/register_screen.dart';
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
         LoginScreen.routeName: (context) => const LoginScreen(),
         RegisterScreen.routeName: (context) => const RegisterScreen(),
         HomeLayout.routeName: (context) => const HomeLayout(),
+        DetailsScreen.routeName: (context) => const DetailsScreen(),
       },
       builder: EasyLoading.init(
         builder: BotToastInit(),
