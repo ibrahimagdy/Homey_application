@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homey/pages/favorite_screen/favorite_screen.dart';
 import 'package:homey/pages/home_screen/home_screen.dart';
-import 'package:homey/pages/map_screen/map_screen.dart';
 import 'package:homey/pages/profile_screen/profile_screen.dart';
 
 class HomeLayout extends StatefulWidget {
@@ -17,7 +16,6 @@ class _HomeLayoutState extends State<HomeLayout> {
   int selectedIndex = 0;
   List<Widget> screens = [
     const HomeView(),
-    const MapView(),
     const FavoriteView(),
     const ProfileView(),
   ];
@@ -62,12 +60,6 @@ class _HomeLayoutState extends State<HomeLayout> {
               ),
               BottomNavigationBarItem(
                 icon: ImageIcon(
-                  AssetImage("assets/images/map_icon.png"),
-                ),
-                label: "Map",
-              ),
-              BottomNavigationBarItem(
-                icon: ImageIcon(
                   AssetImage("assets/images/fav_icon.png"),
                 ),
                 label: "Favorite",
@@ -82,17 +74,17 @@ class _HomeLayoutState extends State<HomeLayout> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color(0xffC6FAFF),
-        shape: const CircleBorder(),
-        onPressed: () {},
-        child: const Icon(
-          Icons.add,
-          color: Color(0xff0A1128),
-          size: 45,
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: const Color(0xffC6FAFF),
+      //   shape: const CircleBorder(),
+      //   onPressed: () {},
+      //   child: const Icon(
+      //     Icons.add,
+      //     color: Color(0xff0A1128),
+      //     size: 45,
+      //   ),
+      // ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
