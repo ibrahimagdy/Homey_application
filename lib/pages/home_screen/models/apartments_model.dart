@@ -10,11 +10,23 @@ class ApartmentModel {
   final String? image8;
   final String price;
   final String address;
+  final String agent;
+  final String propertyType;
+  final String propertyArea;
+  final int bedrooms;
+  final int bathrooms;
+  final int kitchens;
 
   const ApartmentModel({
     required this.mainImage,
     required this.price,
     required this.address,
+    required this.agent,
+    required this.propertyType,
+    required this.propertyArea,
+    required this.bedrooms,
+    required this.bathrooms,
+    required this.kitchens,
     this.image1,
     this.image2,
     this.image3,

@@ -41,26 +41,16 @@ class ApartmentItem extends StatelessWidget {
                       horizontal: 30,
                     ),
                     child: Container(
-                      width: mediaQuery.width * 0.085,
-                      height: mediaQuery.height * 0.085,
+                      width: mediaQuery.width * 0.075,
+                      height: mediaQuery.height * 0.075,
                       decoration: BoxDecoration(
                         color: Colors.white.withOpacity(0.21),
                         shape: BoxShape.circle,
                       ),
-                      child: const Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Icon(
-                            Icons.favorite,
-                            color: Colors.white,
-                            size: 29,
-                          ),
-                          Icon(
-                            Icons.favorite_border,
-                            color: Colors.red,
-                            size: 30,
-                          ),
-                        ],
+                      child: const Icon(
+                        Icons.favorite_border,
+                        color: Colors.red,
+                        size: 23,
                       ),
                     ),
                   ),
@@ -83,14 +73,18 @@ class ApartmentItem extends StatelessWidget {
                       Text(
                         apartmentModel.price,
                         style: theme.textTheme.bodySmall!.copyWith(
-                            color: const Color(0xff163A51),
-                            fontWeight: FontWeight.bold),
+                          color: const Color(0xff0096A4),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                        ),
                       ),
                       Text(
-                        apartmentModel.address,
+                        "${apartmentModel.propertyType} - ${apartmentModel.address}",
+                        overflow: TextOverflow.ellipsis,
                         style: theme.textTheme.bodySmall!.copyWith(
                             color: const Color(0xff163A51),
-                            fontWeight: FontWeight.bold),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12),
                       ),
                     ],
                   ),
