@@ -13,6 +13,8 @@ class DetailsScreen extends StatefulWidget {
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
+  int currentImage = 0;
+
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context).size;
@@ -27,7 +29,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
       args.image6,
       args.image7,
       args.image8,
-    ];
+    ].where((image) => image != null).toList();
+
     return Scaffold(
       backgroundColor: const Color(0xff0A1128),
       body: Column(
@@ -37,15 +40,25 @@ class _DetailsScreenState extends State<DetailsScreen> {
               CarouselSlider(
                 options: CarouselOptions(
                   height: mediaQuery.height * 0.4,
-                  enableInfiniteScroll: false,
                   viewportFraction: 1.0,
+                  onPageChanged: (index, _) {
+                    setState(() {
+                      currentImage = index;
+                    });
+                  },
                 ),
-                items: images.where((image) => image != null).map((image) {
-                  return Image.asset(
-                    image!,
-                    height: mediaQuery.height * 0.4,
-                    width: mediaQuery.width,
-                    fit: BoxFit.fill,
+                items: images.map((image) {
+                  return ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      bottomRight: Radius.circular(30),
+                      bottomLeft: Radius.circular(30),
+                    ),
+                    child: Image.asset(
+                      image!,
+                      height: mediaQuery.height * 0.4,
+                      width: mediaQuery.width,
+                      fit: BoxFit.fill,
+                    ),
                   );
                 }).toList(),
               ),
@@ -62,11 +75,27 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   ),
                 ),
               ),
-              Container(
-                alignment: Alignment.bottomRight,
-                decoration: BoxDecoration(
-                  color: const Color(0xff0A1128).withOpacity(0.54),
-                  borderRadius: BorderRadius.circular(10),
+              Positioned(
+                bottom: 20,
+                right: 20,
+                child: Container(
+                  width: mediaQuery.width * 0.15,
+                  height: mediaQuery.height * 0.05,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  decoration: BoxDecoration(
+                    color: const Color(0xff0A1128).withOpacity(0.54),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(
+                    child: Text(
+                      "${currentImage + 1}/${images.length}",
+                      style: const TextStyle(
+                        color: Color(0xff0096A4),
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ],
