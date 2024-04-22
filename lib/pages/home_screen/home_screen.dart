@@ -13,109 +13,183 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   int selectedIndex = 0;
+  String searchQuery = "";
+
+  List<ApartmentModel> apartments = [
+    const ApartmentModel(
+      mainImage: "assets/images/m1/m2.jpeg",
+      price: "3650 EGP/month",
+      address: "Mansoura, toshka street",
+      agent: "Mohamed Anas",
+      propertyType: "Apartment",
+      propertyArea: "90 m",
+      bedrooms: 2,
+      bathrooms: 1,
+      kitchens: 1,
+      image1: "assets/images/m1/m1.jpeg",
+      image2: "assets/images/m1/m3.jpeg",
+      image3: "assets/images/m1/m4.jpeg",
+      image4: "assets/images/m1/m5.jpeg",
+      image5: "assets/images/m1/m9.jpeg",
+      image6: "assets/images/m1/m6.jpeg",
+      image7: "assets/images/m1/m7.jpeg",
+      image8: "assets/images/m1/m8.jpeg",
+    ),
+    const ApartmentModel(
+      mainImage: "assets/images/m5/m1.jpeg",
+      price: "4700 EGP/month",
+      address: "Cairo, 5th settlement",
+      agent: "Nihal Hossam",
+      propertyType: "Apartment",
+      propertyArea: "105 m",
+      bedrooms: 3,
+      bathrooms: 1,
+      kitchens: 1,
+      image1: "assets/images/m5/m2.jpeg",
+      image2: "assets/images/m5/m3.jpeg",
+      image3: "assets/images/m5/m4.jpeg",
+      image4: "assets/images/m5/m5.jpeg",
+      image5: "assets/images/m5/m6.jpeg",
+      image6: "assets/images/m5/m7.jpeg",
+      image7: "assets/images/m5/m8.jpeg",
+    ),
+    const ApartmentModel(
+      mainImage: "assets/images/m6/m1.jpeg",
+      price: "3000 EGP/month",
+      address: "Maadi, 9 street",
+      agent: "Ibrahim Hegi",
+      propertyType: "Apartment",
+      propertyArea: "85 m",
+      bedrooms: 2,
+      bathrooms: 1,
+      kitchens: 1,
+      image1: "assets/images/m6/m2.jpeg",
+      image2: "assets/images/m6/m3.jpeg",
+      image3: "assets/images/m6/m4.jpeg",
+      image4: "assets/images/m6/m5.jpeg",
+      image5: "assets/images/m6/m6.jpeg",
+    ),
+    const ApartmentModel(
+      mainImage: "assets/images/m3/m1.jpeg",
+      price: "1300 EGP/month",
+      address: "Aswan, Elsadat street",
+      agent: "Hagar Ahmed",
+      propertyType: "Room",
+      propertyArea: "50 m",
+      bedrooms: 1,
+      bathrooms: 1,
+      kitchens: 1,
+      image1: "assets/images/m3/m2.jpeg",
+      image2: "assets/images/m3/m3.jpeg",
+      image3: "assets/images/m3/m4.jpeg",
+    ),
+    const ApartmentModel(
+      mainImage: "assets/images/m4/m1.jpeg",
+      price: "3500 EGP/month",
+      address: "Alexandria, Elgeish street",
+      agent: "Hisham abdallah",
+      propertyType: "Apartment",
+      propertyArea: "100 m",
+      bedrooms: 2,
+      bathrooms: 1,
+      kitchens: 1,
+      image1: "assets/images/m4/m2.jpeg",
+      image2: "assets/images/m4/m3.jpeg",
+      image3: "assets/images/m4/m4.jpeg",
+      image4: "assets/images/m4/m5.jpeg",
+      image6: "assets/images/m4/m6.jpeg",
+    ),
+    const ApartmentModel(
+      mainImage: "assets/images/m2/m1.jpeg",
+      price: "2000 EGP/month",
+      address: "Tanta, Elgeish street",
+      agent: "Nada Ahmed",
+      propertyType: "Room",
+      propertyArea: "60 m",
+      bedrooms: 1,
+      bathrooms: 1,
+      kitchens: 1,
+      image1: "assets/images/m2/m2.jpeg",
+      image2: "assets/images/m2/m3.jpeg",
+      image3: "assets/images/m2/m4.jpeg",
+      image4: "assets/images/m2/m5.jpeg",
+      image5: "assets/images/m2/m6.jpeg",
+      image6: "assets/images/m2/m7.jpeg",
+    ),
+    const ApartmentModel(
+      mainImage: "assets/images/m7/m1.jpeg",
+      price: "3450 EGP/month",
+      address: "Kafr El Sheikh, Mubark street",
+      agent: "Nancy khaled",
+      propertyType: "Apartment",
+      propertyArea: "87 m",
+      bedrooms: 2,
+      bathrooms: 1,
+      kitchens: 1,
+      image1: "assets/images/m7/m2.jpeg",
+      image2: "assets/images/m7/m3.jpeg",
+      image3: "assets/images/m7/m4.jpeg",
+      image4: "assets/images/m7/m5.jpeg",
+      image5: "assets/images/m7/m6.jpeg",
+      image6: "assets/images/m7/m7.jpeg",
+      image7: "assets/images/m7/m8.jpeg",
+    ),
+    const ApartmentModel(
+      mainImage: "assets/images/m8/m1.jpeg",
+      price: "2900 EGP/month",
+      address: "Menofia, Gamal Abdelnasser street",
+      agent: "Mohamed Tarek",
+      propertyType: "Apartment",
+      propertyArea: "80 m",
+      bedrooms: 1,
+      bathrooms: 1,
+      kitchens: 1,
+      image1: "assets/images/m8/m2.jpeg",
+      image2: "assets/images/m8/m3.jpeg",
+      image3: "assets/images/m8/m4.jpeg",
+      image4: "assets/images/m8/m5.jpeg",
+      image5: "assets/images/m8/m6.jpeg",
+    ),
+  ];
+  List<CategoryModel> categories = [
+    CategoryModel(
+        categoryName: "All", categoryImage: "assets/images/all_pic.png"),
+    CategoryModel(
+        categoryName: "Room", categoryImage: "assets/images/rooms_pic.png"),
+    CategoryModel(
+        categoryName: "Apartment",
+        categoryImage: "assets/images/apartments_pic.png"),
+  ];
+
+  List<ApartmentModel> get searchFilteredApartments {
+    if (searchQuery.isEmpty) {
+      return apartments;
+    } else {
+      return apartments
+          .where((apartment) => apartment.address
+              .toLowerCase()
+              .contains(searchQuery.toLowerCase()))
+          .toList();
+    }
+  }
+
+  List<ApartmentModel> get filteredApartments {
+    if (selectedIndex == 0) {
+      return apartments;
+    } else {
+      String selectedCategoryName = categories[selectedIndex].categoryName;
+      return apartments
+          .where((apartment) => apartment.propertyType == selectedCategoryName)
+          .toList();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     var name = ModalRoute.of(context)!.settings.arguments as String;
     var theme = Theme.of(context);
     var mediaQuery = MediaQuery.of(context).size;
-    List<CategoryModel> categories = [
-      CategoryModel(
-          categoryName: "All", categoryImage: "assets/images/all_pic.png"),
-      CategoryModel(
-          categoryName: "Rooms", categoryImage: "assets/images/rooms_pic.png"),
-      CategoryModel(
-          categoryName: "Apartments",
-          categoryImage: "assets/images/apartments_pic.png"),
-    ];
-    List<ApartmentModel> apartments = [
-      const ApartmentModel(
-        mainImage: "assets/images/m1/m2.jpeg",
-        price: "4100 EGP/month",
-        address: "Cairo,5th settlement",
-        image1: "assets/images/m1/m1.jpeg",
-        image2: "assets/images/m1/m3.jpeg",
-        image3: "assets/images/m1/m4.jpeg",
-        image4: "assets/images/m1/m5.jpeg",
-        image5: "assets/images/m1/m9.jpeg",
-        image6: "assets/images/m1/m6.jpeg",
-        image7: "assets/images/m1/m7.jpeg",
-        image8: "assets/images/m1/m8.jpeg",
-      ),
-      const ApartmentModel(
-        mainImage: "assets/images/m5/m1.jpeg",
-        price: "3650 EGP/month",
-        address: "Mansoura,toshka street",
-        image1: "assets/images/m5/m2.jpeg",
-        image2: "assets/images/m5/m3.jpeg",
-        image3: "assets/images/m5/m4.jpeg",
-        image4: "assets/images/m5/m5.jpeg",
-        image5: "assets/images/m5/m6.jpeg",
-        image6: "assets/images/m5/m7.jpeg",
-        image7: "assets/images/m5/m8.jpeg",
-      ),
-      const ApartmentModel(
-        mainImage: "assets/images/m4/m1.jpeg",
-        price: "4100 EGP/month",
-        address: "Cairo,5th settlement",
-        image1: "assets/images/m4/m2.jpeg",
-        image2: "assets/images/m4/m3.jpeg",
-        image3: "assets/images/m4/m4.jpeg",
-        image4: "assets/images/m4/m5.jpeg",
-        image6: "assets/images/m4/m6.jpeg",
-      ),
-      const ApartmentModel(
-        mainImage: "assets/images/m2/m1.jpeg",
-        price: "3650 EGP/month",
-        address: "Mansoura,toshka street",
-        image1: "assets/images/m2/m2.jpeg",
-        image2: "assets/images/m2/m3.jpeg",
-        image3: "assets/images/m2/m4.jpeg",
-        image4: "assets/images/m2/m5.jpeg",
-        image5: "assets/images/m2/m6.jpeg",
-        image6: "assets/images/m2/m7.jpeg",
-      ),
-      const ApartmentModel(
-        mainImage: "assets/images/m3/m1.jpeg",
-        price: "3650 EGP/month",
-        address: "Mansoura,toshka street",
-        image1: "assets/images/m3/m2.jpeg",
-        image2: "assets/images/m3/m3.jpeg",
-        image3: "assets/images/m3/m4.jpeg",
-      ),
-      const ApartmentModel(
-        mainImage: "assets/images/m6/m1.jpeg",
-        price: "3650 EGP/month",
-        address: "Mansoura,toshka street",
-        image1: "assets/images/m6/m2.jpeg",
-        image2: "assets/images/m6/m3.jpeg",
-        image3: "assets/images/m6/m4.jpeg",
-        image4: "assets/images/m6/m5.jpeg",
-        image5: "assets/images/m6/m6.jpeg",
-      ),
-      const ApartmentModel(
-        mainImage: "assets/images/m7/m1.jpeg",
-        price: "3650 EGP/month",
-        address: "Mansoura,toshka street",
-        image1: "assets/images/m7/m2.jpeg",
-        image2: "assets/images/m7/m3.jpeg",
-        image3: "assets/images/m7/m4.jpeg",
-        image4: "assets/images/m7/m5.jpeg",
-        image5: "assets/images/m7/m6.jpeg",
-        image6: "assets/images/m7/m7.jpeg",
-        image7: "assets/images/m7/m8.jpeg",
-      ),
-      const ApartmentModel(
-        mainImage: "assets/images/m8/m1.jpeg",
-        price: "3650 EGP/month",
-        address: "Mansoura,toshka street",
-        image1: "assets/images/m8/m2.jpeg",
-        image2: "assets/images/m8/m3.jpeg",
-        image3: "assets/images/m8/m4.jpeg",
-        image4: "assets/images/m8/m5.jpeg",
-        image5: "assets/images/m8/m6.jpeg",
-      ),
-    ];
+
     return SafeArea(
       child: Column(
         children: [
@@ -143,9 +217,9 @@ class _HomeViewState extends State<HomeView> {
             padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 22),
             child: TextField(
               onChanged: (value) {
-                //setState(() {
-                //searchQuery = value;
-                //});
+                setState(() {
+                  searchQuery = value;
+                });
               },
               style: theme.textTheme.bodyMedium!.copyWith(
                 color: const Color(0xff0A1128),
@@ -153,10 +227,9 @@ class _HomeViewState extends State<HomeView> {
               decoration: InputDecoration(
                 filled: true,
                 fillColor: const Color(0xffC6FAFF),
-                hintText: "Search...",
-                hintStyle: theme.textTheme.bodyMedium!.copyWith(
-                  color: const Color(0xff0A1128),
-                ),
+                hintText: "Search based on governorate...",
+                hintStyle: theme.textTheme.bodyMedium!
+                    .copyWith(color: const Color(0xff0A1128), fontSize: 12),
                 prefixIcon: Image.asset("assets/images/search_icon.png"),
                 suffixIcon: Image.asset("assets/images/filter_icon.png"),
                 border: OutlineInputBorder(
@@ -259,10 +332,15 @@ class _HomeViewState extends State<HomeView> {
                   ),
                   Expanded(
                     child: ListView.builder(
-                      itemCount: apartments.length,
+                      itemCount: searchQuery.isEmpty
+                          ? filteredApartments.length
+                          : searchFilteredApartments.length,
                       itemBuilder: (context, index) {
+                        final apartmentModel = searchQuery.isEmpty
+                            ? filteredApartments[index]
+                            : searchFilteredApartments[index];
                         return ApartmentItem(
-                          apartmentModel: apartments[index],
+                          apartmentModel: apartmentModel,
                         );
                       },
                     ),
