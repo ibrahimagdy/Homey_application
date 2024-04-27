@@ -79,7 +79,7 @@ class ApartmentItem extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "${apartmentModel.propertyType} - ${apartmentModel.address}",
+                        apartmentModel.address,
                         overflow: TextOverflow.ellipsis,
                         style: theme.textTheme.bodySmall!.copyWith(
                             color: const Color(0xff163A51),
