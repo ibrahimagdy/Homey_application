@@ -23,13 +23,16 @@ class _MapScreenState extends State<MapScreen> {
       body: Stack(
         children: [
           GoogleMap(
-            onMapCreated: (controller) {
+            onMapCreated: (controller) async {
               googleMapController = controller;
               setState(() {
                 markers.add(
                   Marker(
                     markerId: MarkerId(args.idLocation),
                     position: args.latLng,
+                    infoWindow: InfoWindow(
+                      title: args.titleLocation,
+                    ),
                   ),
                 );
               });
