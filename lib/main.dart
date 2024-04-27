@@ -7,6 +7,7 @@ import 'package:homey/core/theme/application_theme.dart';
 import 'package:homey/layout/home_layout.dart';
 import 'package:homey/pages/details_screen/details_screen.dart';
 import 'package:homey/pages/login_screen/login_screen.dart';
+import 'package:homey/pages/map_screen/map_screen.dart';
 import 'package:homey/pages/onBoarding_screens/onboarding_screens.dart';
 import 'package:homey/pages/register_screen/register_screen.dart';
 import 'package:homey/pages/splash_screen/splash_screen.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
         RegisterScreen.routeName: (context) => const RegisterScreen(),
         HomeLayout.routeName: (context) => const HomeLayout(),
         DetailsScreen.routeName: (context) => const DetailsScreen(),
+        MapScreen.routeName: (context) => const MapScreen(),
       },
       builder: EasyLoading.init(
         builder: BotToastInit(),

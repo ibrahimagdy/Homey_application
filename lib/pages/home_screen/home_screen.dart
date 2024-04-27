@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:homey/pages/home_screen/models/apartments_model.dart';
 import 'package:homey/pages/home_screen/widgets/apartment_item.dart';
 
@@ -23,6 +24,8 @@ class _HomeViewState extends State<HomeView> {
       agent: "Mohamed Anas",
       propertyType: "Apartment",
       propertyArea: "90 m",
+      description:
+          "Welcome to this beautifully maintained, spacious 2-bedroom apartment located in the bustling heart of the city. This apartment is available for rent and offers a unique blend of comfort, style, and convenience",
       bedrooms: 2,
       bathrooms: 1,
       kitchens: 1,
@@ -34,6 +37,9 @@ class _HomeViewState extends State<HomeView> {
       image6: "assets/images/m1/m6.jpeg",
       image7: "assets/images/m1/m7.jpeg",
       image8: "assets/images/m1/m8.jpeg",
+      idLocation: "1",
+      titleLocation: "",
+      latLng: LatLng(31.036605430944128, 31.361358885174905),
     ),
     const ApartmentModel(
       mainImage: "assets/images/m5/m1.jpeg",
@@ -42,6 +48,8 @@ class _HomeViewState extends State<HomeView> {
       agent: "Nihal Hossam",
       propertyType: "Apartment",
       propertyArea: "105 m",
+      description:
+          "Welcome to this beautifully maintained, spacious 2-bedroom apartment located in the bustling heart of the city. This apartment is available for rent and offers a unique blend of comfort, style, and convenience",
       bedrooms: 3,
       bathrooms: 1,
       kitchens: 1,
@@ -52,36 +60,9 @@ class _HomeViewState extends State<HomeView> {
       image5: "assets/images/m5/m6.jpeg",
       image6: "assets/images/m5/m7.jpeg",
       image7: "assets/images/m5/m8.jpeg",
-    ),
-    const ApartmentModel(
-      mainImage: "assets/images/m6/m1.jpeg",
-      price: "3000 EGP/month",
-      address: "Maadi, 9 street",
-      agent: "Ibrahim Hegi",
-      propertyType: "Apartment",
-      propertyArea: "85 m",
-      bedrooms: 2,
-      bathrooms: 1,
-      kitchens: 1,
-      image1: "assets/images/m6/m2.jpeg",
-      image2: "assets/images/m6/m3.jpeg",
-      image3: "assets/images/m6/m4.jpeg",
-      image4: "assets/images/m6/m5.jpeg",
-      image5: "assets/images/m6/m6.jpeg",
-    ),
-    const ApartmentModel(
-      mainImage: "assets/images/m3/m1.jpeg",
-      price: "1300 EGP/month",
-      address: "Aswan, Elsadat street",
-      agent: "Hagar Ahmed",
-      propertyType: "Room",
-      propertyArea: "50 m",
-      bedrooms: 1,
-      bathrooms: 1,
-      kitchens: 1,
-      image1: "assets/images/m3/m2.jpeg",
-      image2: "assets/images/m3/m3.jpeg",
-      image3: "assets/images/m3/m4.jpeg",
+      idLocation: "2",
+      titleLocation: "",
+      latLng: LatLng(29.996348671789004, 31.438558240111757),
     ),
     const ApartmentModel(
       mainImage: "assets/images/m4/m1.jpeg",
@@ -90,6 +71,8 @@ class _HomeViewState extends State<HomeView> {
       agent: "Hisham abdallah",
       propertyType: "Apartment",
       propertyArea: "100 m",
+      description:
+          "Welcome to this beautifully maintained, spacious 2-bedroom apartment located in the bustling heart of the city. This apartment is available for rent and offers a unique blend of comfort, style, and convenience",
       bedrooms: 2,
       bathrooms: 1,
       kitchens: 1,
@@ -98,14 +81,59 @@ class _HomeViewState extends State<HomeView> {
       image3: "assets/images/m4/m4.jpeg",
       image4: "assets/images/m4/m5.jpeg",
       image6: "assets/images/m4/m6.jpeg",
+      idLocation: "3",
+      titleLocation: "",
+      latLng: LatLng(31.21002324037778, 29.91407565718379),
+    ),
+    const ApartmentModel(
+      mainImage: "assets/images/m6/m1.jpeg",
+      price: "3000 EGP/month",
+      address: "Maadi, 9 street",
+      agent: "Ibrahim Hegi",
+      propertyType: "Apartment",
+      propertyArea: "85 m",
+      description:
+          "Welcome to this beautifully maintained, spacious 2-bedroom apartment located in the bustling heart of the city. This apartment is available for rent and offers a unique blend of comfort, style, and convenience",
+      bedrooms: 2,
+      bathrooms: 1,
+      kitchens: 1,
+      image1: "assets/images/m6/m2.jpeg",
+      image2: "assets/images/m6/m3.jpeg",
+      image3: "assets/images/m6/m4.jpeg",
+      image4: "assets/images/m6/m5.jpeg",
+      image5: "assets/images/m6/m6.jpeg",
+      idLocation: "4",
+      titleLocation: "",
+      latLng: LatLng(29.966811431738726, 31.256733021994652),
+    ),
+    const ApartmentModel(
+      mainImage: "assets/images/m3/m1.jpeg",
+      price: "1300 EGP/month",
+      address: "Fayoum, Ashri street",
+      agent: "Hagar Ahmed",
+      propertyType: "Room",
+      propertyArea: "50 m",
+      description:
+          "Welcome to this beautifully maintained, spacious 2-bedroom apartment located in the bustling heart of the city. This apartment is available for rent and offers a unique blend of comfort, style, and convenience",
+      bedrooms: 1,
+      bathrooms: 1,
+      kitchens: 1,
+      image1: "assets/images/m3/m2.jpeg",
+      image2: "assets/images/m3/m3.jpeg",
+      image3: "assets/images/m3/m4.jpeg",
+      idLocation: "5",
+      titleLocation: "",
+      latLng: LatLng(29.318981199265618, 30.83824800231381),
     ),
     const ApartmentModel(
       mainImage: "assets/images/m2/m1.jpeg",
       price: "2000 EGP/month",
-      address: "Tanta, Elgeish street",
+      address: "Tanta, Anwar street",
       agent: "Nada Ahmed",
       propertyType: "Room",
       propertyArea: "60 m",
+      description:
+          "Welcome to this beautifully maintained, spacious 2-bedroom apartment located in the bustling heart of the city. This apartment is available for rent and offers a unique blend of comfort, style, and convenience",
       bedrooms: 1,
       bathrooms: 1,
       kitchens: 1,
@@ -115,6 +143,9 @@ class _HomeViewState extends State<HomeView> {
       image4: "assets/images/m2/m5.jpeg",
       image5: "assets/images/m2/m6.jpeg",
       image6: "assets/images/m2/m7.jpeg",
+      idLocation: "6",
+      titleLocation: "",
+      latLng: LatLng(30.79412967707392, 30.99340773904518),
     ),
     const ApartmentModel(
       mainImage: "assets/images/m7/m1.jpeg",
@@ -123,6 +154,8 @@ class _HomeViewState extends State<HomeView> {
       agent: "Nancy khaled",
       propertyType: "Apartment",
       propertyArea: "87 m",
+      description:
+          "Welcome to this beautifully maintained, spacious 2-bedroom apartment located in the bustling heart of the city. This apartment is available for rent and offers a unique blend of comfort, style, and convenience",
       bedrooms: 2,
       bathrooms: 1,
       kitchens: 1,
@@ -133,6 +166,9 @@ class _HomeViewState extends State<HomeView> {
       image5: "assets/images/m7/m6.jpeg",
       image6: "assets/images/m7/m7.jpeg",
       image7: "assets/images/m7/m8.jpeg",
+      idLocation: "7",
+      titleLocation: "",
+      latLng: LatLng(31.09520834123604, 30.945486394585412),
     ),
     const ApartmentModel(
       mainImage: "assets/images/m8/m1.jpeg",
@@ -141,6 +177,8 @@ class _HomeViewState extends State<HomeView> {
       agent: "Mohamed Tarek",
       propertyType: "Apartment",
       propertyArea: "80 m",
+      description:
+          "Welcome to this beautifully maintained, spacious 2-bedroom apartment located in the bustling heart of the city. This apartment is available for rent and offers a unique blend of comfort, style, and convenience",
       bedrooms: 1,
       bathrooms: 1,
       kitchens: 1,
@@ -149,6 +187,9 @@ class _HomeViewState extends State<HomeView> {
       image3: "assets/images/m8/m4.jpeg",
       image4: "assets/images/m8/m5.jpeg",
       image5: "assets/images/m8/m6.jpeg",
+      idLocation: "8",
+      titleLocation: "",
+      latLng: LatLng(30.575001562753233, 31.010559959816145),
     ),
   ];
   List<CategoryModel> categories = [
@@ -172,7 +213,6 @@ class _HomeViewState extends State<HomeView> {
           .toList();
     }
   }
-
   List<ApartmentModel> get filteredApartments {
     if (selectedIndex == 0) {
       return apartments;
@@ -227,7 +267,7 @@ class _HomeViewState extends State<HomeView> {
               decoration: InputDecoration(
                 filled: true,
                 fillColor: const Color(0xffC6FAFF),
-                hintText: "Search based on governorate...",
+                hintText: "Search based on university location ...",
                 hintStyle: theme.textTheme.bodyMedium!
                     .copyWith(color: const Color(0xff0A1128), fontSize: 12),
                 prefixIcon: Image.asset("assets/images/search_icon.png"),
