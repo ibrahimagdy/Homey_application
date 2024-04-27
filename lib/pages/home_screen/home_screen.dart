@@ -38,7 +38,7 @@ class _HomeViewState extends State<HomeView> {
       image7: "assets/images/m1/m7.jpeg",
       image8: "assets/images/m1/m8.jpeg",
       idLocation: "1",
-      titleLocation: "",
+      titleLocation: "Near from Mansoura University",
       latLng: LatLng(31.036605430944128, 31.361358885174905),
     ),
     const ApartmentModel(
@@ -61,7 +61,7 @@ class _HomeViewState extends State<HomeView> {
       image6: "assets/images/m5/m7.jpeg",
       image7: "assets/images/m5/m8.jpeg",
       idLocation: "2",
-      titleLocation: "",
+      titleLocation: "Near from German University",
       latLng: LatLng(29.996348671789004, 31.438558240111757),
     ),
     const ApartmentModel(
@@ -82,7 +82,7 @@ class _HomeViewState extends State<HomeView> {
       image4: "assets/images/m4/m5.jpeg",
       image6: "assets/images/m4/m6.jpeg",
       idLocation: "3",
-      titleLocation: "",
+      titleLocation: "Near from Alexandria University",
       latLng: LatLng(31.21002324037778, 29.91407565718379),
     ),
     const ApartmentModel(
@@ -103,7 +103,7 @@ class _HomeViewState extends State<HomeView> {
       image4: "assets/images/m6/m5.jpeg",
       image5: "assets/images/m6/m6.jpeg",
       idLocation: "4",
-      titleLocation: "",
+      titleLocation: "Near from Sadat Academy",
       latLng: LatLng(29.966811431738726, 31.256733021994652),
     ),
     const ApartmentModel(
@@ -122,7 +122,7 @@ class _HomeViewState extends State<HomeView> {
       image2: "assets/images/m3/m3.jpeg",
       image3: "assets/images/m3/m4.jpeg",
       idLocation: "5",
-      titleLocation: "",
+      titleLocation: "Near from Fayoum University",
       latLng: LatLng(29.318981199265618, 30.83824800231381),
     ),
     const ApartmentModel(
@@ -144,7 +144,7 @@ class _HomeViewState extends State<HomeView> {
       image5: "assets/images/m2/m6.jpeg",
       image6: "assets/images/m2/m7.jpeg",
       idLocation: "6",
-      titleLocation: "",
+      titleLocation: "Near from Tanta University",
       latLng: LatLng(30.79412967707392, 30.99340773904518),
     ),
     const ApartmentModel(
@@ -167,7 +167,7 @@ class _HomeViewState extends State<HomeView> {
       image6: "assets/images/m7/m7.jpeg",
       image7: "assets/images/m7/m8.jpeg",
       idLocation: "7",
-      titleLocation: "",
+      titleLocation: "Near from KFS University",
       latLng: LatLng(31.09520834123604, 30.945486394585412),
     ),
     const ApartmentModel(
@@ -188,8 +188,8 @@ class _HomeViewState extends State<HomeView> {
       image4: "assets/images/m8/m5.jpeg",
       image5: "assets/images/m8/m6.jpeg",
       idLocation: "8",
-      titleLocation: "",
-      latLng: LatLng(30.575001562753233, 31.010559959816145),
+      titleLocation: "Near from Menofia University",
+      latLng: LatLng(30.567476924839806, 31.01079039395229),
     ),
   ];
   List<CategoryModel> categories = [
