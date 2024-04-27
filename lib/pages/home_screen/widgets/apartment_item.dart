@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:homey/core/provider/app_provider.dart';
 import 'package:homey/pages/details_screen/details_screen.dart';
 import 'package:homey/pages/home_screen/models/apartments_model.dart';
+import 'package:provider/provider.dart';
 
 class ApartmentItem extends StatelessWidget {
   final ApartmentModel apartmentModel;
@@ -11,6 +13,8 @@ class ApartmentItem extends StatelessWidget {
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context).size;
     var theme = Theme.of(context);
+    var appProvider = Provider.of<AppProvider>(context);
+    var isFavorite = appProvider.isFavorite(apartmentModel);
     return Column(
       children: [
         GestureDetector(
@@ -47,10 +51,21 @@ class ApartmentItem extends StatelessWidget {
                         color: Colors.white.withOpacity(0.21),
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(
-                        Icons.favorite_border,
-                        color: Colors.red,
-                        size: 23,
+                      child: IconButton(
+                        padding: EdgeInsets.zero,
+                        alignment: Alignment.center,
+                        onPressed: () {
+                          if (isFavorite) {
+                            appProvider.removeFromFavorites(apartmentModel);
+                          } else {
+                            appProvider.addToFavorites(apartmentModel);
+                          }
+                        },
+                        icon: Icon(
+                          isFavorite ? Icons.favorite : Icons.favorite_border,
+                          color: Colors.red,
+                          size: 23,
+                        ),
                       ),
                     ),
                   ),
