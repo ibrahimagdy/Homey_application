@@ -80,6 +80,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           CustomTextFormField(
                             controller: emailController,
+                            inputStyle: const TextStyle(
+                              color: Color(0xff14213D),
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            style: const TextStyle(
+                                fontSize: 15,
+                                color: Color(0xffACACAC),
+                                fontWeight: FontWeight.w500),
                             validator: (value) {
                               if (value == null || value.trim().isEmpty) {
                                 return "You must enter your email";
@@ -96,6 +105,15 @@ class _LoginScreenState extends State<LoginScreen> {
                           const SizedBox(height: 18),
                           CustomTextFormField(
                             controller: passwordController,
+                            style: const TextStyle(
+                                fontSize: 15,
+                                color: Color(0xffACACAC),
+                                fontWeight: FontWeight.w500),
+                            inputStyle: const TextStyle(
+                              color: Color(0xff14213D),
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                            ),
                             hintText: "Password",
                             obscureText: isVisable,
                             validator: (value) {
@@ -233,18 +251,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
       EasyLoading.show();
       try {
-        UserCredential user =
-            await FirebaseAuth.instance.signInWithEmailAndPassword(
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: email,
           password: password,
         );
         EasyLoading.dismiss();
         SnackBarService.showSuccessMessage("successfully signed in");
-        print(user.user?.displayName);
         Navigator.pushReplacementNamed(
           context,
           HomeLayout.routeName,
-          arguments: user.user!.displayName,
         );
       } on FirebaseAuthException catch (e) {
         EasyLoading.dismiss();

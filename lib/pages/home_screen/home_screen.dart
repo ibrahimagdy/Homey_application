@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:homey/pages/home_screen/models/apartments_model.dart';
@@ -25,7 +26,7 @@ class _HomeViewState extends State<HomeView> {
       propertyType: "Apartment",
       propertyArea: "90 m",
       description:
-          "Welcome to this beautifully maintained, spacious 2-bedroom apartment located in the bustling heart of the city. This apartment is available for rent and offers a unique blend of comfort, style, and convenience",
+      "Welcome to this beautifully maintained, spacious 2-bedroom apartment located in the bustling heart of the city. This apartment is available for rent and offers a unique blend of comfort, style, and convenience",
       bedrooms: 2,
       bathrooms: 1,
       kitchens: 1,
@@ -49,7 +50,7 @@ class _HomeViewState extends State<HomeView> {
       propertyType: "Apartment",
       propertyArea: "105 m",
       description:
-          "Welcome to this beautifully maintained, spacious 2-bedroom apartment located in the bustling heart of the city. This apartment is available for rent and offers a unique blend of comfort, style, and convenience",
+      "Welcome to this beautifully maintained, spacious 2-bedroom apartment located in the bustling heart of the city. This apartment is available for rent and offers a unique blend of comfort, style, and convenience",
       bedrooms: 3,
       bathrooms: 1,
       kitchens: 1,
@@ -72,7 +73,7 @@ class _HomeViewState extends State<HomeView> {
       propertyType: "Apartment",
       propertyArea: "100 m",
       description:
-          "Welcome to this beautifully maintained, spacious 2-bedroom apartment located in the bustling heart of the city. This apartment is available for rent and offers a unique blend of comfort, style, and convenience",
+      "Welcome to this beautifully maintained, spacious 2-bedroom apartment located in the bustling heart of the city. This apartment is available for rent and offers a unique blend of comfort, style, and convenience",
       bedrooms: 2,
       bathrooms: 1,
       kitchens: 1,
@@ -93,7 +94,7 @@ class _HomeViewState extends State<HomeView> {
       propertyType: "Apartment",
       propertyArea: "85 m",
       description:
-          "Welcome to this beautifully maintained, spacious 2-bedroom apartment located in the bustling heart of the city. This apartment is available for rent and offers a unique blend of comfort, style, and convenience",
+      "Welcome to this beautifully maintained, spacious 2-bedroom apartment located in the bustling heart of the city. This apartment is available for rent and offers a unique blend of comfort, style, and convenience",
       bedrooms: 2,
       bathrooms: 1,
       kitchens: 1,
@@ -114,7 +115,7 @@ class _HomeViewState extends State<HomeView> {
       propertyType: "Room",
       propertyArea: "50 m",
       description:
-          "Welcome to this beautifully maintained, spacious 2-bedroom apartment located in the bustling heart of the city. This apartment is available for rent and offers a unique blend of comfort, style, and convenience",
+      "Welcome to this beautifully maintained, spacious 2-bedroom apartment located in the bustling heart of the city. This apartment is available for rent and offers a unique blend of comfort, style, and convenience",
       bedrooms: 1,
       bathrooms: 1,
       kitchens: 1,
@@ -133,7 +134,7 @@ class _HomeViewState extends State<HomeView> {
       propertyType: "Room",
       propertyArea: "60 m",
       description:
-          "Welcome to this beautifully maintained, spacious 2-bedroom apartment located in the bustling heart of the city. This apartment is available for rent and offers a unique blend of comfort, style, and convenience",
+      "Welcome to this beautifully maintained, spacious 2-bedroom apartment located in the bustling heart of the city. This apartment is available for rent and offers a unique blend of comfort, style, and convenience",
       bedrooms: 1,
       bathrooms: 1,
       kitchens: 1,
@@ -155,7 +156,7 @@ class _HomeViewState extends State<HomeView> {
       propertyType: "Apartment",
       propertyArea: "87 m",
       description:
-          "Welcome to this beautifully maintained, spacious 2-bedroom apartment located in the bustling heart of the city. This apartment is available for rent and offers a unique blend of comfort, style, and convenience",
+      "Welcome to this beautifully maintained, spacious 2-bedroom apartment located in the bustling heart of the city. This apartment is available for rent and offers a unique blend of comfort, style, and convenience",
       bedrooms: 2,
       bathrooms: 1,
       kitchens: 1,
@@ -178,7 +179,7 @@ class _HomeViewState extends State<HomeView> {
       propertyType: "Apartment",
       propertyArea: "80 m",
       description:
-          "Welcome to this beautifully maintained, spacious 2-bedroom apartment located in the bustling heart of the city. This apartment is available for rent and offers a unique blend of comfort, style, and convenience",
+      "Welcome to this beautifully maintained, spacious 2-bedroom apartment located in the bustling heart of the city. This apartment is available for rent and offers a unique blend of comfort, style, and convenience",
       bedrooms: 1,
       bathrooms: 1,
       kitchens: 1,
@@ -208,11 +209,12 @@ class _HomeViewState extends State<HomeView> {
     } else {
       return apartments
           .where((apartment) => apartment.address
-              .toLowerCase()
-              .contains(searchQuery.toLowerCase()))
+          .toLowerCase()
+          .contains(searchQuery.toLowerCase()))
           .toList();
     }
   }
+
   List<ApartmentModel> get filteredApartments {
     if (selectedIndex == 0) {
       return apartments;
@@ -226,7 +228,8 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    var name = ModalRoute.of(context)!.settings.arguments as String;
+    var name = FirebaseAuth.instance.currentUser?.displayName;
+    var image = FirebaseAuth.instance.currentUser!.photoURL;
     var theme = Theme.of(context);
     var mediaQuery = MediaQuery.of(context).size;
 
@@ -295,7 +298,7 @@ class _HomeViewState extends State<HomeView> {
                     margin: const EdgeInsets.symmetric(horizontal: 8),
                     decoration: BoxDecoration(
                       color:
-                          isSelected ? const Color(0xff7DD7DF) : Colors.white,
+                      isSelected ? const Color(0xff7DD7DF) : Colors.white,
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: Row(
@@ -305,7 +308,7 @@ class _HomeViewState extends State<HomeView> {
                         CircleAvatar(
                           radius: 18,
                           backgroundImage:
-                              AssetImage(categories[index].categoryImage),
+                          AssetImage(categories[index].categoryImage),
                         ),
                         const SizedBox(width: 7),
                         Text(

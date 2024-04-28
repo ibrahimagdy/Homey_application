@@ -84,6 +84,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       child: Column(
                         children: [
                           CustomTextFormField(
+                            style: const TextStyle(
+                                fontSize: 15,
+                                color: Color(0xffACACAC),
+                                fontWeight: FontWeight.w500),
+                            inputStyle: const TextStyle(
+                              color: Color(0xff14213D),
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                            ),
                             controller: emailController,
                             validator: (value) {
                               if (value == null || value.trim().isEmpty) {
@@ -100,6 +109,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           const SizedBox(height: 18),
                           CustomTextFormField(
+                            style: const TextStyle(
+                                fontSize: 15,
+                                color: Color(0xffACACAC),
+                                fontWeight: FontWeight.w500),
+                            inputStyle: const TextStyle(
+                              color: Color(0xff14213D),
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                            ),
                             controller: nameController,
                             validator: (value) {
                               if (value == null || value.trim().isEmpty) {
@@ -111,6 +129,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           const SizedBox(height: 18),
                           CustomTextFormField(
+                            style: const TextStyle(
+                                fontSize: 15,
+                                color: Color(0xffACACAC),
+                                fontWeight: FontWeight.w500),
+                            inputStyle: const TextStyle(
+                              color: Color(0xff14213D),
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                            ),
                             controller: passwordController,
                             hintText: "Password",
                             obscureText: isVisable,
@@ -144,6 +171,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           const SizedBox(height: 18),
                           CustomTextFormField(
+                            style: const TextStyle(
+                                fontSize: 15,
+                                color: Color(0xffACACAC),
+                                fontWeight: FontWeight.w500),
+                            inputStyle: const TextStyle(
+                              color: Color(0xff14213D),
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                            ),
                             controller: confirmPasswordController,
                             hintText: "Confirm Password",
                             obscureText: confirmPasswordVisable,
@@ -159,7 +195,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             suffixIcon: GestureDetector(
                               onTap: () {
                                 confirmPasswordVisable =
-                                    !confirmPasswordVisable;
+                                !confirmPasswordVisable;
                                 setState(() {});
                               },
                               child: Padding(

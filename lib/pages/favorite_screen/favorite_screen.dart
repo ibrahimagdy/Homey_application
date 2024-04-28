@@ -16,7 +16,7 @@ class FavoriteView extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 50),
+          const SizedBox(height: 50),
           Expanded(
             child: ListView.builder(
               itemCount: favoriteApartments.length,

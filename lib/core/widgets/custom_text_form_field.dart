@@ -4,8 +4,11 @@ class CustomTextFormField extends StatelessWidget {
   final TextEditingController controller;
   final String? hintText;
   final bool obscureText;
+  final Color color;
   final FormFieldValidator<String>? validator;
   final Widget? suffixIcon;
+  final TextStyle style;
+  final TextStyle inputStyle;
 
   const CustomTextFormField(
       {super.key,
@@ -13,15 +16,15 @@ class CustomTextFormField extends StatelessWidget {
       this.obscureText = false,
       required this.controller,
       this.validator,
-      this.suffixIcon});
+      this.suffixIcon,
+      this.color = Colors.white,
+      required this.style,
+      required this.inputStyle});
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
     return TextFormField(
-      style: theme.textTheme.bodyLarge!.copyWith(
-        fontSize: 17,
-      ),
+      style: inputStyle,
       enableSuggestions: true,
       validator: validator,
       controller: controller,
@@ -29,8 +32,8 @@ class CustomTextFormField extends StatelessWidget {
       decoration: InputDecoration(
           contentPadding: const EdgeInsets.all(15),
           hintText: hintText,
-          hintStyle: theme.textTheme.bodySmall,
-          fillColor: Colors.white,
+          hintStyle: style,
+          fillColor: color,
           filled: true,
           suffixIcon: suffixIcon,
           suffixIconConstraints: const BoxConstraints(maxWidth: 50),
@@ -41,7 +44,7 @@ class CustomTextFormField extends StatelessWidget {
             ),
           ),
           focusedBorder:
-          OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+              OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
     );
   }
 }
