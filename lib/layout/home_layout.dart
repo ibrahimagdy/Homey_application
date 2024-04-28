@@ -74,17 +74,6 @@ class _HomeLayoutState extends State<HomeLayout> {
           ),
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   backgroundColor: const Color(0xffC6FAFF),
-      //   shape: const CircleBorder(),
-      //   onPressed: () {},
-      //   child: const Icon(
-      //     Icons.add,
-      //     color: Color(0xff0A1128),
-      //     size: 45,
-      //   ),
-      // ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

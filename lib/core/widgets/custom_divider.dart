@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 class CustomDivider extends StatelessWidget {
-  const CustomDivider({super.key});
+  final double? thickness;
+  final Color? color;
+
+  const CustomDivider({super.key, this.thickness, this.color});
 
   @override
   Widget build(BuildContext context) {
