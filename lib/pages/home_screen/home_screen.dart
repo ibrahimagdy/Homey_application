@@ -50,7 +50,7 @@ class _HomeViewState extends State<HomeView> {
       propertyType: "Apartment",
       propertyArea: "105 m",
       description:
-      "Welcome to this beautifully maintained, spacious 2-bedroom apartment located in the bustling heart of the city. This apartment is available for rent and offers a unique blend of comfort, style, and convenience",
+          "Cozy student apartment with a study nook, perfect for focused learning and relaxation after a busy day on campus.",
       bedrooms: 3,
       bathrooms: 1,
       kitchens: 1,
@@ -73,7 +73,7 @@ class _HomeViewState extends State<HomeView> {
       propertyType: "Apartment",
       propertyArea: "100 m",
       description:
-      "Welcome to this beautifully maintained, spacious 2-bedroom apartment located in the bustling heart of the city. This apartment is available for rent and offers a unique blend of comfort, style, and convenience",
+          "Two-Bedroom Apartments - Offering more privacy and space, these apartments have a two separate bedroom in addition to a living room and kitchen.",
       bedrooms: 2,
       bathrooms: 1,
       kitchens: 1,
@@ -94,7 +94,7 @@ class _HomeViewState extends State<HomeView> {
       propertyType: "Apartment",
       propertyArea: "85 m",
       description:
-      "Welcome to this beautifully maintained, spacious 2-bedroom apartment located in the bustling heart of the city. This apartment is available for rent and offers a unique blend of comfort, style, and convenience",
+          "Two-Bedroom Apartments: Apartments with two separate bedrooms are popular for roommates, small families, or those who need an extra room for guests or a home office.",
       bedrooms: 2,
       bathrooms: 1,
       kitchens: 1,
@@ -115,7 +115,7 @@ class _HomeViewState extends State<HomeView> {
       propertyType: "Room",
       propertyArea: "50 m",
       description:
-      "Welcome to this beautifully maintained, spacious 2-bedroom apartment located in the bustling heart of the city. This apartment is available for rent and offers a unique blend of comfort, style, and convenience",
+          "it looks very nice and modern so l promise you will get it , it has one bedroom, new bathroom and kitchen don't be quick in making decisions before you see it",
       bedrooms: 1,
       bathrooms: 1,
       kitchens: 1,
@@ -134,7 +134,7 @@ class _HomeViewState extends State<HomeView> {
       propertyType: "Room",
       propertyArea: "60 m",
       description:
-      "Welcome to this beautifully maintained, spacious 2-bedroom apartment located in the bustling heart of the city. This apartment is available for rent and offers a unique blend of comfort, style, and convenience",
+          "Bright and airy student accommodation, conveniently located near university amenities and public transportation.",
       bedrooms: 1,
       bathrooms: 1,
       kitchens: 1,
@@ -156,7 +156,7 @@ class _HomeViewState extends State<HomeView> {
       propertyType: "Apartment",
       propertyArea: "87 m",
       description:
-      "Welcome to this beautifully maintained, spacious 2-bedroom apartment located in the bustling heart of the city. This apartment is available for rent and offers a unique blend of comfort, style, and convenience",
+          "Modern furnished apartment designed for student living, featuring communal spaces ideal for socializing and group study sessions.",
       bedrooms: 2,
       bathrooms: 1,
       kitchens: 1,
@@ -179,7 +179,7 @@ class _HomeViewState extends State<HomeView> {
       propertyType: "Apartment",
       propertyArea: "80 m",
       description:
-      "Welcome to this beautifully maintained, spacious 2-bedroom apartment located in the bustling heart of the city. This apartment is available for rent and offers a unique blend of comfort, style, and convenience",
+          "Compact yet functional student flat with all essentials provided, fostering a conducive environment for academic success.",
       bedrooms: 1,
       bathrooms: 1,
       kitchens: 1,
