@@ -5,6 +5,13 @@ class AppProvider extends ChangeNotifier {
   List<ApartmentModel> favorites = [];
   String? imageUrl;
 
+  List<ApartmentModel> get _favorites => favorites;
+
+  void setFavorites(List<ApartmentModel> favorites) {
+    favorites = _favorites;
+    notifyListeners();
+  }
+
   void addToFavorites(ApartmentModel apartmentModel) {
     favorites.add(apartmentModel);
     notifyListeners();

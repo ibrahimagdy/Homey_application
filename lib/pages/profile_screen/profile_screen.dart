@@ -451,7 +451,7 @@ class _ProfileViewState extends State<ProfileView> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Text(
-                  "Log out of your account",
+                  "Are you sure?",
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
