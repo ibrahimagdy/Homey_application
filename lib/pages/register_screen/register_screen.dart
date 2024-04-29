@@ -90,7 +90,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 fontWeight: FontWeight.w500),
                             inputStyle: const TextStyle(
                               color: Color(0xff14213D),
-                              fontSize: 25,
+                              fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
                             controller: emailController,
@@ -115,7 +115,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 fontWeight: FontWeight.w500),
                             inputStyle: const TextStyle(
                               color: Color(0xff14213D),
-                              fontSize: 25,
+                              fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
                             controller: nameController,
@@ -135,7 +135,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 fontWeight: FontWeight.w500),
                             inputStyle: const TextStyle(
                               color: Color(0xff14213D),
-                              fontSize: 25,
+                              fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
                             controller: passwordController,
@@ -177,7 +177,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 fontWeight: FontWeight.w500),
                             inputStyle: const TextStyle(
                               color: Color(0xff14213D),
-                              fontSize: 25,
+                              fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
                             controller: confirmPasswordController,

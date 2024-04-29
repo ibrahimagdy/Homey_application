@@ -226,20 +226,31 @@ class _HomeViewState extends State<HomeView> {
     }
   }
 
+  late String? name;
+  late String? image;
+
+  @override
+  void initState() {
+    name = FirebaseAuth.instance.currentUser?.displayName;
+    image = FirebaseAuth.instance.currentUser!.photoURL;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    var name = FirebaseAuth.instance.currentUser?.displayName;
-    var image = FirebaseAuth.instance.currentUser!.photoURL;
     var theme = Theme.of(context);
     var mediaQuery = MediaQuery.of(context).size;
-
     return SafeArea(
       child: Column(
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 10),
             child: ListTile(
-              leading: Image.asset("assets/images/profile_pic.png"),
+              leading: image != null
+                  ? CircleAvatar(
+                      backgroundImage: NetworkImage(image!),
+                    )
+                  : Image.asset("assets/images/profile_pic.png"),
               title: Text(
                 "Hi, $name",
                 style: theme.textTheme.bodyMedium!.copyWith(

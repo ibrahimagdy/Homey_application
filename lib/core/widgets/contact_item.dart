@@ -14,7 +14,7 @@ class ContactItem extends StatelessWidget {
         Icon(
           contactIcon,
           color: const Color(0xff0096A4),
-          size: 24,
+          size: 18,
         ),
         const SizedBox(width: 3),
         Text(

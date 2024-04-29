@@ -2,12 +2,14 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:homey/core/widgets/custom_divider.dart';
 import 'package:homey/core/widgets/custom_text_form_field.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import '../login_screen/login_screen.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -17,14 +19,16 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
-  File? image;
-  String? url;
+  late String? profileImagePic;
 
   @override
   void initState() {
+    profileImagePic = FirebaseAuth.instance.currentUser!.photoURL;
     super.initState();
-    loadImageUrl();
   }
+
+  File? image;
+  String? url;
 
   Future<void> pickImageFromGallery() async {
     final pickedFile = await ImagePicker().pickImage(
@@ -36,11 +40,10 @@ class _ProfileViewState extends State<ProfileView> {
     var refStorage = FirebaseStorage.instance.ref(imageName);
     await refStorage.putFile(image!);
     url = await refStorage.getDownloadURL();
-    saveImageUrl(url!);
-    await FirebaseAuth.instance.currentUser?.updatePhotoURL(imageName);
+    await FirebaseAuth.instance.currentUser?.updatePhotoURL(url);
+    profileImagePic = FirebaseAuth.instance.currentUser!.photoURL;
     setState(() {});
   }
-
   Future<void> pickImageFromCamera() async {
     final pickedFile = await ImagePicker().pickImage(
       source: ImageSource.camera,
@@ -51,21 +54,14 @@ class _ProfileViewState extends State<ProfileView> {
     var refStorage = FirebaseStorage.instance.ref(imageName);
     await refStorage.putFile(image!);
     url = await refStorage.getDownloadURL();
-    saveImageUrl(url!);
+    await FirebaseAuth.instance.currentUser?.updatePhotoURL(url);
+    profileImagePic = FirebaseAuth.instance.currentUser!.photoURL;
     setState(() {});
   }
 
-  Future<void> saveImageUrl(String imageUrl) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('profileImageUrl', imageUrl);
-  }
-
-  Future<void> loadImageUrl() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      url = prefs.getString('profileImageUrl');
-    });
-  }
+  String? _selectedGender;
+  DateTime selectedDate = DateTime.now();
+  TextEditingController dateController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -79,166 +75,430 @@ class _ProfileViewState extends State<ProfileView> {
       body: SafeArea(
         child: Form(
           key: formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Center(
-                child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 30),
-                    child: GestureDetector(
-                      onTap: () {
-                        showModalBottomSheet(
-                          backgroundColor: const Color(0xffCBEFF2),
-                          context: context,
-                          builder: (BuildContext context) {
-                            return Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                ListTile(
-                                  leading: const Icon(
-                                    Icons.photo_library,
-                                    color: Color(0xff0096A4),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Center(
+                  child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 30),
+                      child: GestureDetector(
+                        onTap: () {
+                          showModalBottomSheet(
+                            backgroundColor: const Color(0xffCBEFF2),
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  ListTile(
+                                    leading: const Icon(
+                                      Icons.photo_library,
+                                      color: Color(0xff0096A4),
+                                    ),
+                                    title: const Text(
+                                      'Gallery',
+                                      style: TextStyle(
+                                          color: Color(0xff163A51),
+                                          fontSize: 21,
+                                          fontWeight: FontWeight.normal),
+                                    ),
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                      pickImageFromGallery();
+                                    },
                                   ),
-                                  title: const Text(
-                                    'Gallery',
-                                    style: TextStyle(
-                                        color: Color(0xff163A51),
-                                        fontSize: 21,
-                                        fontWeight: FontWeight.normal),
+                                  Divider(
+                                    thickness: 3,
+                                    color: const Color(0xff0A1128)
+                                        .withOpacity(0.26),
+                                    endIndent: 10,
+                                    indent: 10,
                                   ),
-                                  onTap: () {
-                                    Navigator.of(context).pop();
-                                    pickImageFromGallery();
-                                  },
+                                  ListTile(
+                                    leading: const Icon(
+                                      Icons.camera_alt,
+                                      color: Color(0xff0096A4),
+                                    ),
+                                    title: const Text(
+                                      'Camera',
+                                      style: TextStyle(
+                                          color: Color(0xff163A51),
+                                          fontSize: 21,
+                                          fontWeight: FontWeight.normal),
+                                    ),
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                      pickImageFromCamera();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                        child: Stack(
+                          children: [
+                            if (profileImagePic != null)
+                              CircleAvatar(
+                                radius: 50,
+                                backgroundColor: Colors.transparent,
+                                backgroundImage: NetworkImage(profileImagePic!),
+                              )
+                            else
+                              const CircleAvatar(
+                                radius: 50,
+                                backgroundColor: Colors.transparent,
+                                backgroundImage: AssetImage(
+                                  "assets/images/profile_pic_picker.png",
                                 ),
-                                Divider(
-                                  thickness: 3,
-                                  color:
-                                      const Color(0xff0A1128).withOpacity(0.26),
-                                  endIndent: 10,
-                                  indent: 10,
-                                ),
-                                ListTile(
-                                  leading: const Icon(
-                                    Icons.camera_alt,
-                                    color: Color(0xff0096A4),
-                                  ),
-                                  title: const Text(
-                                    'Camera',
-                                    style: TextStyle(
-                                        color: Color(0xff163A51),
-                                        fontSize: 21,
-                                        fontWeight: FontWeight.normal),
-                                  ),
-                                  onTap: () {
-                                    Navigator.of(context).pop();
-                                    pickImageFromCamera();
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      },
-                      child: Stack(
-                        children: [
-                          if (url != null)
-                            CircleAvatar(
-                              radius: 50,
-                              backgroundColor: Colors.transparent,
-                              backgroundImage: NetworkImage(url!),
-                            )
-                          else
-                            const CircleAvatar(
-                              radius: 50,
-                              backgroundColor: Colors.transparent,
-                              backgroundImage: AssetImage(
-                                "assets/images/profile_pic_picker.png",
+                              ),
+                            Positioned(
+                              bottom: 0,
+                              right: 0,
+                              child: Image.asset(
+                                "assets/images/picker_pic.png",
                               ),
                             ),
-                          Positioned(
-                            bottom: 0,
-                            right: 0,
-                            child: Image.asset(
-                              "assets/images/picker_pic.png",
+                          ],
+                        ),
+                      )),
+                ),
+                Text(
+                  name!,
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.titleMedium!.copyWith(
+                    color: const Color(0xffC6FAFF),
+                  ),
+                ),
+                Text(
+                  email!,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Color(0xff66B4BB),
+                    fontSize: 12,
+                  ),
+                ),
+                const CustomDivider(),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+                  child: Text(
+                    "Personal Information",
+                    style: TextStyle(
+                      color: Color(0xffC6FAFF),
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.phone,
+                            color: Color(0xff0096A4),
+                            size: 28,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: CustomTextFormField(
+                              inputStyle: const TextStyle(
+                                  color: Color(0xff0096A4), fontSize: 17),
+                              style: const TextStyle(
+                                color: Color(0xff040710),
+                                fontSize: 16,
+                              ),
+                              controller: phoneController,
+                              hintText: "Phone",
+                              color: const Color(0xffCBEFF2),
                             ),
                           ),
                         ],
                       ),
-                    )),
-              ),
-              Text(
-                name!,
-                textAlign: TextAlign.center,
-                style: theme.textTheme.titleMedium!.copyWith(
-                  color: const Color(0xffC6FAFF),
-                ),
-              ),
-              Text(
-                email!,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: Color(0xff66B4BB),
-                  fontSize: 12,
-                ),
-              ),
-              const CustomDivider(),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-                child: Text(
-                  "Personal Information",
-                  style: TextStyle(
-                    color: Color(0xffC6FAFF),
-                    fontSize: 18,
+                      const SizedBox(height: 30),
+                      Row(
+                        children: [
+                          Image.asset("assets/images/gender_icon.png"),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: DropdownButtonFormField(
+                              iconEnabledColor: const Color(0xff0096A4),
+                              dropdownColor: const Color(0xff7DD7DF),
+                              value: _selectedGender,
+                              items: [
+                                DropdownMenuItem(
+                                  value: 'Male',
+                                  child: Row(
+                                    children: [
+                                      Image.asset(
+                                          "assets/images/male_icon.png"),
+                                      const Text(
+                                        "Male",
+                                        style: TextStyle(
+                                            color: Color(0xff0096A4),
+                                            fontSize: 14),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                DropdownMenuItem(
+                                  value: 'Female',
+                                  child: Row(
+                                    children: [
+                                      Image.asset(
+                                          "assets/images/female_icon.png"),
+                                      const Text(
+                                        "Female",
+                                        style: TextStyle(
+                                            color: Color(0xff0096A4),
+                                            fontSize: 14),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                              onChanged: (value) {
+                                setState(() {
+                                  _selectedGender = value;
+                                });
+                              },
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.all(15),
+                                hintText: "Gender",
+                                hintStyle: const TextStyle(
+                                    color: Color(0xff040710), fontSize: 17),
+                                fillColor: const Color(0xffCBEFF2),
+                                filled: true,
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: const BorderSide(
+                                    color: Color(0xffACACAC),
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 30),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.calendar_today_outlined,
+                            color: Color(0xff0096A4),
+                            size: 28,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: TextFormField(
+                              style: const TextStyle(
+                                  color: Color(0xff0096A4), fontSize: 17),
+                              controller: dateController,
+                              onTap: () {
+                                showCalender(context);
+                              },
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.all(15),
+                                hintText: "Birthday",
+                                hintStyle: const TextStyle(
+                                  color: Color(0xff040710),
+                                  fontSize: 16,
+                                ),
+                                fillColor: const Color(0xffCBEFF2),
+                                filled: true,
+                                suffixIconConstraints:
+                                    const BoxConstraints(maxWidth: 50),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: const BorderSide(
+                                    color: Color(0xffACACAC),
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.phone,
-                          color: Color(0xff0096A4),
-                          size: 28,
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: CustomTextFormField(
-                            inputStyle: const TextStyle(
-                                color: Color(0xff0096A4), fontSize: 17),
-                            style: const TextStyle(
-                              color: Color(0xff040710),
-                              fontSize: 16,
-                            ),
-                            controller: phoneController,
-                            hintText: "Phone",
-                            color: const Color(0xffCBEFF2),
-                          ),
-                        ),
-                      ],
+                const SizedBox(height: 15),
+                Container(
+                  width: 100,
+                  height: 50,
+                  margin: const EdgeInsets.symmetric(horizontal: 130),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xff7DD7DF),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
                     ),
-                    const SizedBox(height: 40),
-                    Row(
-                      children: [
-                        Image.asset("assets/images/gender_icon.png"),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                      ],
-                    ),
-                  ],
+                    onPressed: () {},
+                    child: Text("Save",
+                        style: theme.textTheme.bodySmall!.copyWith(
+                            color: const Color(0xff0A1128), fontSize: 18)),
+                  ),
                 ),
-              ),
-            ],
+                const SizedBox(height: 15),
+                const CustomDivider(),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+                  child: Text(
+                    "More info and support",
+                    style: TextStyle(
+                      color: Color(0xffC6FAFF),
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: ListTile(
+                    leading: Icon(
+                      CupertinoIcons.exclamationmark_circle,
+                      size: 30,
+                      color: Color(0xff0096A4),
+                    ),
+                    title: Text(
+                      "About",
+                      style: TextStyle(color: Color(0xff0096A4), fontSize: 18),
+                    ),
+                    trailing: Icon(
+                      Icons.navigate_next,
+                      size: 30,
+                      color: Color(0xff0096A4),
+                    ),
+                  ),
+                ),
+                const CustomDivider(),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+                  child: Text(
+                    "Login",
+                    style: TextStyle(
+                      color: Color(0xffC6FAFF),
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: GestureDetector(
+                    onTap: () {
+                      showLogoutConfirmationDialog(context);
+                    },
+                    child: const ListTile(
+                      title: Text(
+                        "Logout",
+                        style:
+                            TextStyle(color: Color(0xffEA2929), fontSize: 18),
+                      ),
+                      trailing: Icon(
+                        Icons.navigate_next,
+                        size: 30,
+                        color: Color(0xff0096A4),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
+    );
+  }
+
+  void showCalender(BuildContext context) async {
+    var dateSelected = await showDatePicker(
+      context: context,
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    );
+    if (dateSelected == null) return;
+    selectedDate = dateSelected;
+    dateController.text =
+        '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}';
+    setState(() {});
+  }
+
+  void showLogoutConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  "Log out of your account",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                const Divider(
+                  color: Colors.grey,
+                  thickness: 1.5,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.of(dialogContext).pop();
+                        },
+                        child: const Text(
+                          "Cancel",
+                          style:
+                              TextStyle(color: Color(0xff0A1128), fontSize: 18),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.of(dialogContext).pop(); // Close the dialog
+                          var auth = FirebaseAuth.instance;
+                          auth.signOut().then((value) {
+                            Navigator.pushReplacementNamed(
+                                context, LoginScreen.routeName);
+                          });
+                        },
+                        child: const Text("Logout",
+                            style: TextStyle(color: Colors.red, fontSize: 18)),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

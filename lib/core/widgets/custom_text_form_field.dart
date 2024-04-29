@@ -34,17 +34,19 @@ class CustomTextFormField extends StatelessWidget {
           hintText: hintText,
           hintStyle: style,
           fillColor: color,
-          filled: true,
-          suffixIcon: suffixIcon,
-          suffixIconConstraints: const BoxConstraints(maxWidth: 50),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(
-              color: Color(0xffACACAC),
-            ),
+        filled: true,
+        suffixIcon: suffixIcon,
+        suffixIconConstraints: const BoxConstraints(maxWidth: 50),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Color(0xffACACAC),
           ),
-          focusedBorder:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
     );
   }
 }

@@ -82,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             controller: emailController,
                             inputStyle: const TextStyle(
                               color: Color(0xff14213D),
-                              fontSize: 25,
+                              fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
                             style: const TextStyle(
@@ -111,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 fontWeight: FontWeight.w500),
                             inputStyle: const TextStyle(
                               color: Color(0xff14213D),
-                              fontSize: 25,
+                              fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
                             hintText: "Password",
