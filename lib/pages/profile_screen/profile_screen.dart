@@ -27,38 +27,23 @@ class _ProfileViewState extends State<ProfileView> {
     super.initState();
   }
 
+  Future<void> pickImage(ImageSource source) async {
+    final pickedFile = await ImagePicker().pickImage(
+      source: source,
+    );
+    if (pickedFile == null) return;
+    image = File(pickedFile.path);
+    var imageName = basename(pickedFile.path);
+    var refStorage = FirebaseStorage.instance.ref(imageName);
+    await refStorage.putFile(image!);
+    url = await refStorage.getDownloadURL();
+    await FirebaseAuth.instance.currentUser?.updatePhotoURL(url);
+    profileImagePic = FirebaseAuth.instance.currentUser!.photoURL;
+    setState(() {});
+  }
+
   File? image;
   String? url;
-
-  Future<void> pickImageFromGallery() async {
-    final pickedFile = await ImagePicker().pickImage(
-      source: ImageSource.gallery,
-    );
-    if (pickedFile == null) return;
-    image = File(pickedFile.path);
-    var imageName = basename(pickedFile.path);
-    var refStorage = FirebaseStorage.instance.ref(imageName);
-    await refStorage.putFile(image!);
-    url = await refStorage.getDownloadURL();
-    await FirebaseAuth.instance.currentUser?.updatePhotoURL(url);
-    profileImagePic = FirebaseAuth.instance.currentUser!.photoURL;
-    setState(() {});
-  }
-  Future<void> pickImageFromCamera() async {
-    final pickedFile = await ImagePicker().pickImage(
-      source: ImageSource.camera,
-    );
-    if (pickedFile == null) return;
-    image = File(pickedFile.path);
-    var imageName = basename(pickedFile.path);
-    var refStorage = FirebaseStorage.instance.ref(imageName);
-    await refStorage.putFile(image!);
-    url = await refStorage.getDownloadURL();
-    await FirebaseAuth.instance.currentUser?.updatePhotoURL(url);
-    profileImagePic = FirebaseAuth.instance.currentUser!.photoURL;
-    setState(() {});
-  }
-
   String? _selectedGender;
   DateTime selectedDate = DateTime.now();
   TextEditingController dateController = TextEditingController();
@@ -84,58 +69,7 @@ class _ProfileViewState extends State<ProfileView> {
                       padding: const EdgeInsets.symmetric(vertical: 30),
                       child: GestureDetector(
                         onTap: () {
-                          showModalBottomSheet(
-                            backgroundColor: const Color(0xffCBEFF2),
-                            context: context,
-                            builder: (BuildContext context) {
-                              return Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  ListTile(
-                                    leading: const Icon(
-                                      Icons.photo_library,
-                                      color: Color(0xff0096A4),
-                                    ),
-                                    title: const Text(
-                                      'Gallery',
-                                      style: TextStyle(
-                                          color: Color(0xff163A51),
-                                          fontSize: 21,
-                                          fontWeight: FontWeight.normal),
-                                    ),
-                                    onTap: () {
-                                      Navigator.of(context).pop();
-                                      pickImageFromGallery();
-                                    },
-                                  ),
-                                  Divider(
-                                    thickness: 3,
-                                    color: const Color(0xff0A1128)
-                                        .withOpacity(0.26),
-                                    endIndent: 10,
-                                    indent: 10,
-                                  ),
-                                  ListTile(
-                                    leading: const Icon(
-                                      Icons.camera_alt,
-                                      color: Color(0xff0096A4),
-                                    ),
-                                    title: const Text(
-                                      'Camera',
-                                      style: TextStyle(
-                                          color: Color(0xff163A51),
-                                          fontSize: 21,
-                                          fontWeight: FontWeight.normal),
-                                    ),
-                                    onTap: () {
-                                      Navigator.of(context).pop();
-                                      pickImageFromCamera();
-                                    },
-                                  ),
-                                ],
-                              );
-                            },
-                          );
+                          showBottomSheetForImageSource(context);
                         },
                         child: Stack(
                           children: [
@@ -497,6 +431,60 @@ class _ProfileViewState extends State<ProfileView> {
               ],
             ),
           ),
+        );
+      },
+    );
+  }
+
+  void showBottomSheetForImageSource(BuildContext context) {
+    showModalBottomSheet(
+      backgroundColor: const Color(0xffCBEFF2),
+      context: context,
+      builder: (BuildContext context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(
+                Icons.photo_library,
+                color: Color(0xff0096A4),
+              ),
+              title: const Text(
+                'Gallery',
+                style: TextStyle(
+                    color: Color(0xff163A51),
+                    fontSize: 21,
+                    fontWeight: FontWeight.normal),
+              ),
+              onTap: () {
+                Navigator.of(context).pop();
+                pickImage(ImageSource.gallery);
+              },
+            ),
+            Divider(
+              thickness: 3,
+              color: const Color(0xff0A1128).withOpacity(0.26),
+              endIndent: 10,
+              indent: 10,
+            ),
+            ListTile(
+              leading: const Icon(
+                Icons.camera_alt,
+                color: Color(0xff0096A4),
+              ),
+              title: const Text(
+                'Camera',
+                style: TextStyle(
+                    color: Color(0xff163A51),
+                    fontSize: 21,
+                    fontWeight: FontWeight.normal),
+              ),
+              onTap: () async {
+                Navigator.of(context).pop();
+                await pickImage(ImageSource.camera);
+              },
+            ),
+          ],
         );
       },
     );
