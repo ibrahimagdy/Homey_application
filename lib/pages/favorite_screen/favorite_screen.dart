@@ -15,20 +15,20 @@ class FavoriteView extends StatelessWidget {
     final itemCount = favoriteApartments.length;
     return Scaffold(
       backgroundColor: const Color(0xff0A1128),
-      appBar: AppBar(
-        backgroundColor: const Color(0xff0A1128),
-        centerTitle: true,
-        title: Text(
-          "Favorites ($itemCount)",
-          style: theme.textTheme.titleMedium!.copyWith(
-            color: const Color(0xff7DD7DF),
-          ),
-        ),
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: const Color(0xff0A1128),
+      //   centerTitle: true,
+      //   title: Text(
+      //     "Favorites ($itemCount)",
+      //     style: theme.textTheme.titleMedium!.copyWith(
+      //       color: const Color(0xff7DD7DF),
+      //     ),
+      //   ),
+      // ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 30),
+          const SizedBox(height: 40),
           Expanded(
             child: ListView.builder(
               itemCount: favoriteApartments.length,
