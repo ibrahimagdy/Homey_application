@@ -479,9 +479,9 @@ class _ProfileViewState extends State<ProfileView> {
                     fontSize: 21,
                     fontWeight: FontWeight.normal),
               ),
-              onTap: () async {
+              onTap: () {
                 Navigator.of(context).pop();
-                await pickImage(ImageSource.camera);
+                pickImage(ImageSource.camera);
               },
             ),
           ],
