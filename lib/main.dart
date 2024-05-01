@@ -10,6 +10,7 @@ import 'package:homey/pages/details_screen/details_screen.dart';
 import 'package:homey/pages/login_screen/login_screen.dart';
 import 'package:homey/pages/map_screen/map_screen.dart';
 import 'package:homey/pages/onBoarding_screens/onboarding_screens.dart';
+import 'package:homey/pages/profile_screen/profile_screen.dart';
 import 'package:homey/pages/register_screen/register_screen.dart';
 import 'package:homey/pages/splash_screen/splash_screen.dart';
 import 'package:provider/provider.dart';
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
           HomeLayout.routeName: (context) => const HomeLayout(),
           DetailsScreen.routeName: (context) => const DetailsScreen(),
           MapScreen.routeName: (context) => const MapScreen(),
+          ProfileView.routeName: (context) => const ProfileView(),
         },
         builder: EasyLoading.init(
           builder: BotToastInit(),

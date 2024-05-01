@@ -214,7 +214,6 @@ class _HomeViewState extends State<HomeView> {
           .toList();
     }
   }
-
   List<ApartmentModel> get filteredApartments {
     if (selectedIndex == 0) {
       return apartments;
