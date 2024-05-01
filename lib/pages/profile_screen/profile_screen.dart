@@ -12,6 +12,8 @@ import 'package:path/path.dart';
 import '../login_screen/login_screen.dart';
 
 class ProfileView extends StatefulWidget {
+  static const String routeName = "profile";
+
   const ProfileView({super.key});
 
   @override
