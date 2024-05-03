@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:homey/core/widgets/custom_divider.dart';
 import 'package:homey/core/widgets/custom_text_form_field.dart';
+import 'package:homey/pages/about_us_screen/about_us_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 
@@ -302,22 +303,28 @@ class _ProfileViewState extends State<ProfileView> {
                     ),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: ListTile(
-                    leading: Icon(
-                      CupertinoIcons.exclamationmark_circle,
-                      size: 30,
-                      color: Color(0xff0096A4),
-                    ),
-                    title: Text(
-                      "About",
-                      style: TextStyle(color: Color(0xff0096A4), fontSize: 18),
-                    ),
-                    trailing: Icon(
-                      Icons.navigate_next,
-                      size: 30,
-                      color: Color(0xff0096A4),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, AboutUsScreen.routeName);
+                    },
+                    child: const ListTile(
+                      leading: Icon(
+                        CupertinoIcons.exclamationmark_circle,
+                        size: 30,
+                        color: Color(0xff0096A4),
+                      ),
+                      title: Text(
+                        "About",
+                        style:
+                            TextStyle(color: Color(0xff0096A4), fontSize: 18),
+                      ),
+                      trailing: Icon(
+                        Icons.navigate_next,
+                        size: 30,
+                        color: Color(0xff0096A4),
+                      ),
                     ),
                   ),
                 ),

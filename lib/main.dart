@@ -6,11 +6,11 @@ import 'package:homey/core/provider/app_provider.dart';
 import 'package:homey/core/services/loading_service.dart';
 import 'package:homey/core/theme/application_theme.dart';
 import 'package:homey/layout/home_layout.dart';
+import 'package:homey/pages/about_us_screen/about_us_screen.dart';
 import 'package:homey/pages/details_screen/details_screen.dart';
 import 'package:homey/pages/login_screen/login_screen.dart';
 import 'package:homey/pages/map_screen/map_screen.dart';
 import 'package:homey/pages/onBoarding_screens/onboarding_screens.dart';
-import 'package:homey/pages/profile_screen/profile_screen.dart';
 import 'package:homey/pages/register_screen/register_screen.dart';
 import 'package:homey/pages/splash_screen/splash_screen.dart';
 import 'package:provider/provider.dart';
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
           HomeLayout.routeName: (context) => const HomeLayout(),
           DetailsScreen.routeName: (context) => const DetailsScreen(),
           MapScreen.routeName: (context) => const MapScreen(),
-          ProfileView.routeName: (context) => const ProfileView(),
+          AboutUsScreen.routeName: (context) => const AboutUsScreen(),
         },
         builder: EasyLoading.init(
           builder: BotToastInit(),
