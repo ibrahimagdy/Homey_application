@@ -163,7 +163,7 @@ class SnackBarService {
         );
       },
       duration: const Duration(
-        seconds: 10,
+        seconds: 2,
       ),
       dismissDirections: [DismissDirection.endToStart],
     );

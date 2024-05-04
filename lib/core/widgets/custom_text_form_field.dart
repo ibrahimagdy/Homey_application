@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final String? hintText;
   final bool obscureText;
   final Color color;
@@ -9,14 +9,18 @@ class CustomTextFormField extends StatelessWidget {
   final Widget? suffixIcon;
   final TextStyle style;
   final TextStyle inputStyle;
+  final String? initialValue;
+  final void Function(String)? onChanged;
 
   const CustomTextFormField(
       {super.key,
       this.hintText,
       this.obscureText = false,
-      required this.controller,
       this.validator,
       this.suffixIcon,
+      this.initialValue,
+      this.controller,
+      this.onChanged,
       this.color = Colors.white,
       required this.style,
       required this.inputStyle});
@@ -24,16 +28,18 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: initialValue,
       style: inputStyle,
       enableSuggestions: true,
       validator: validator,
       controller: controller,
       obscureText: obscureText,
+      onChanged: onChanged,
       decoration: InputDecoration(
-          contentPadding: const EdgeInsets.all(15),
-          hintText: hintText,
-          hintStyle: style,
-          fillColor: color,
+        contentPadding: const EdgeInsets.all(15),
+        hintText: hintText,
+        hintStyle: style,
+        fillColor: color,
         filled: true,
         suffixIcon: suffixIcon,
         suffixIconConstraints: const BoxConstraints(maxWidth: 50),
