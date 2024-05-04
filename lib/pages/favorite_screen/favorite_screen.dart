@@ -13,21 +13,31 @@ class FavoriteView extends StatelessWidget {
     final favoriteApartments = appProvider.favorites;
     return Scaffold(
       backgroundColor: const Color(0xff0A1128),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 40),
-          Expanded(
-            child: ListView.builder(
-              itemCount: favoriteApartments.length,
-              itemBuilder: (context, index) {
-                final apartment = favoriteApartments[index];
-                return ApartmentItem(apartmentModel: apartment);
-              },
+      body: favoriteApartments.isNotEmpty
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 40),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: favoriteApartments.length,
+                    itemBuilder: (context, index) {
+                      final apartment = favoriteApartments[index];
+                      return ApartmentItem(apartmentModel: apartment);
+                    },
+                  ),
+                ),
+              ],
+            )
+          : const Center(
+              child: Text(
+                'No Apartments Found',
+                style: TextStyle(
+                    color: Color(0xffC6FAFF),
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
-        ],
-      ),
     );
   }
 }
