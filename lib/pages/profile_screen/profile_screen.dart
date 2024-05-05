@@ -8,6 +8,7 @@ import 'package:homey/core/network_layer/firebase_utils.dart';
 import 'package:homey/core/widgets/custom_divider.dart';
 import 'package:homey/core/widgets/custom_text_form_field.dart';
 import 'package:homey/pages/about_us_screen/about_us_screen.dart';
+import 'package:homey/pages/notifications_screen/notifications_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 
@@ -205,7 +206,8 @@ class _ProfileViewState extends State<ProfileView> {
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, AboutUsScreen.routeName);
+                      Navigator.pushNamed(
+                          context, NotificationScreen.routeName);
                     },
                     child: const ListTile(
                       leading: Icon(
