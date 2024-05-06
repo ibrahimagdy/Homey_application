@@ -1,5 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:homey/core/network_layer/firebase_notifications.dart';
@@ -18,6 +19,8 @@ import 'package:homey/pages/splash_screen/splash_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
+
+final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,6 +42,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         initialRoute: SplashScreen.routeName,
+        navigatorKey: navigatorKey,
         routes: {
           SplashScreen.routeName: (context) => const SplashScreen(),
           OnBoarding.routeName: (context) => const OnBoarding(),
@@ -48,7 +52,11 @@ class MyApp extends StatelessWidget {
           DetailsScreen.routeName: (context) => const DetailsScreen(),
           MapScreen.routeName: (context) => const MapScreen(),
           AboutUsScreen.routeName: (context) => const AboutUsScreen(),
-          NotificationScreen.routeName: (context) => const NotificationScreen(),
+          NotificationScreen.routeName: (context) {
+            final RemoteMessage message =
+                ModalRoute.of(context)!.settings.arguments as RemoteMessage;
+            return NotificationScreen(message: message);
+          },
         },
         builder: EasyLoading.init(
           builder: BotToastInit(),

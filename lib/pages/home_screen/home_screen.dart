@@ -4,7 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:homey/pages/home_screen/models/apartments_model.dart';
 import 'package:homey/pages/home_screen/widgets/apartment_item.dart';
 
-import 'models/category_data.dart';
+import 'models/category_model.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
