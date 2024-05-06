@@ -1,17 +1,75 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:homey/main.dart';
+import 'package:homey/pages/notifications_screen/notifications_screen.dart';
 
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {}
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  print('Title: ${message.notification?.title}');
+  print('Body: ${message.notification?.body}');
+  print('Payload: ${message.data}');
+}
 
 class FCM {
   static FirebaseMessaging messaging = FirebaseMessaging.instance;
 
+  final androidChannel = const AndroidNotificationChannel(
+    'high_importance_channel',
+    'High Importance Notifications',
+    description: 'This channel is used for important notifications',
+    importance: Importance.defaultImportance,
+  );
+  final localNotifications = FlutterLocalNotificationsPlugin();
+
+  static void handleMessage(RemoteMessage? message) {
+    if (message == null) return;
+
+    navigatorKey.currentState
+        ?.pushNamed(NotificationScreen.routeName, arguments: message);
+  }
+
+  //  Future<void> initLocalNotifications() async {
+  //   const iOS  = DarwinInitializationSettings();
+  //   const android = AndroidInitializationSettings("icon");
+  //   const settings = InitializationSettings(android: android, iOS: iOS);
+  //
+  //   await localNotifications.initialize(
+  //     settings,
+  //     onDidReceiveNotificationResponse: (payload){
+  //       final message = RemoteMessage.fromMap(jsonEncode(payload!));
+  //       handleMessage(message);
+  //     }
+  //   );
+  //   final platform = localNotifications.resolvePlatformSpecificImplementation(
+  //     <AndroidFlutterLocalNotificationsPlugin>();
+  //
+  //   );
+  // }
+
+  static Future<void> initPushNotifications() async {
+    await FirebaseMessaging.instance
+        .setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+    FirebaseMessaging.instance.getInitialMessage().then(handleMessage);
+    FirebaseMessaging.onMessageOpenedApp.listen(handleMessage);
+    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+    FirebaseMessaging.onMessage.listen((message) {
+      fcmOnForeground();
+    });
+  }
+
   static Future<void> fcmInit() async {
-    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
     iosPermission();
     getToken();
     fcmOnForeground();
+    initPushNotifications();
   }
 
   static Future<void> iosPermission() async {
@@ -40,10 +98,10 @@ class FCM {
       importance: Importance.max,
     );
     final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-        FlutterLocalNotificationsPlugin();
+    FlutterLocalNotificationsPlugin();
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
+        AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification? notification = message.notification;
@@ -55,17 +113,19 @@ class FCM {
             .doc()
             .set({"message": notification.title});
         flutterLocalNotificationsPlugin.show(
-            notification.hashCode,
-            notification.title,
-            notification.body,
-            NotificationDetails(
-              android: AndroidNotificationDetails(
-                channel.id,
-                channel.name,
-                channelDescription: channel.description,
-                icon: "icon",
-              ),
-            ));
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          NotificationDetails(
+            android: AndroidNotificationDetails(
+              channel.id,
+              channel.name,
+              channelDescription: channel.description,
+              icon: "icon",
+            ),
+          ),
+          payload: jsonEncode(message.toMap()),
+        );
       }
     });
   }
