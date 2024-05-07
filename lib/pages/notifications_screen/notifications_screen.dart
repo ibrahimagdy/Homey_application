@@ -1,12 +1,9 @@
-import 'dart:convert';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:homey/pages/notifications_screen/models/notification_model.dart';
 import 'package:overlay_support/overlay_support.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationScreen extends StatefulWidget {
   static const String routeName = "not";
@@ -20,7 +17,6 @@ class NotificationScreen extends StatefulWidget {
 class _NotificationScreenState extends State<NotificationScreen> {
   late final FirebaseMessaging messaging;
   List<NotificationModel> notifications = [];
-  final String notificationKey = 'notifications';
 
   void registerNotification() async {
     await Firebase.initializeApp();
@@ -58,31 +54,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
           duration: const Duration(seconds: 2),
         );
       }
-      saveNotifications();
     });
-  }
-
-  void loadNotifications() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? notificationsJson = prefs.getString(notificationKey);
-    if (notificationsJson != null) {
-      List<dynamic> decoded = jsonDecode(notificationsJson);
-      setState(() {
-        notifications =
-            decoded.map((e) => NotificationModel.fromJson(e)).toList();
-      });
-    }
-  }
-
-  void saveNotifications() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString(notificationKey, jsonEncode(notifications));
   }
 
   @override
   void initState() {
     registerNotification();
-    loadNotifications();
     super.initState();
   }
 
@@ -117,6 +94,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           ? ListView.builder(
               itemCount: notifications.length,
               itemBuilder: (context, index) {
+                final reversedIndex = notifications.length - 1 - index;
                 return Container(
                   margin: const EdgeInsets.all(15),
                   padding: const EdgeInsets.only(left: 15, top: 10, bottom: 10),
@@ -143,8 +121,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              notifications[index].dataTitle ??
-                                  notifications[index].title!,
+                              notifications[reversedIndex].dataTitle ??
+                                  notifications[reversedIndex].title!,
                               style: const TextStyle(
                                 color: Color(0xff0096A4),
                                 fontSize: 20,
@@ -154,8 +132,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             ),
                             const SizedBox(height: 5),
                             Text(
-                              notifications[index].dataBody ??
-                                  notifications[index].body!,
+                              notifications[reversedIndex].dataBody ??
+                                  notifications[reversedIndex].body!,
                               style: const TextStyle(
                                   color: Color(0xff163A51),
                                   fontSize: 17,
