@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -210,7 +209,6 @@ class _ProfileViewState extends State<ProfileView> {
                       Navigator.pushNamed(
                         context,
                         NotificationScreen.routeName,
-                        arguments: const RemoteMessage(),
                       );
                     },
                     child: const ListTile(
