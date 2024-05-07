@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:homey/pages/home_screen/models/apartments_model.dart';
 import 'package:homey/pages/home_screen/widgets/apartment_item.dart';
+import 'package:homey/pages/notifications_screen/notifications_screen.dart';
 
 import 'models/category_model.dart';
 
@@ -257,11 +258,16 @@ class _HomeViewState extends State<HomeView> {
                   fontSize: 18,
                 ),
               ),
-              trailing: CircleAvatar(
-                backgroundColor: Colors.white,
-                child: Image.asset(
-                  "assets/images/notification.png",
-                  color: Colors.black,
+              trailing: GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, NotificationScreen.routeName);
+                },
+                child: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: Image.asset(
+                    "assets/images/notification.png",
+                    color: Colors.black,
+                  ),
                 ),
               ),
             ),
