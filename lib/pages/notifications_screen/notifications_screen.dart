@@ -67,7 +67,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var mediaQuery = MediaQuery.of(context).size;
-
     return Scaffold(
       backgroundColor: const Color(0xff0A1128),
       appBar: AppBar(
