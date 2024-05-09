@@ -35,6 +35,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
       print("Permission declined by users");
     }
 
+    String? token = await FirebaseMessaging.instance.getToken();
+    print('FCM Token: $token');
+
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       NotificationModel notification = NotificationModel(
         title: message.notification!.title,
@@ -48,10 +51,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
       if (notification != null) {
         showSimpleNotification(
           elevation: 0,
-          Text(notification.title!),
-          subtitle: Text(notification.body!),
+          contentPadding: const EdgeInsets.all(20),
+          Text(
+            notification.title!,
+            style: const TextStyle(fontSize: 16),
+          ),
           background: const Color(0xff0A1128).withOpacity(0.9),
-          duration: const Duration(seconds: 2),
+          duration: const Duration(seconds: 10),
         );
       }
     });
@@ -66,7 +72,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    var mediaQuery = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: const Color(0xff0A1128),
       appBar: AppBar(
@@ -95,10 +100,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
               itemBuilder: (context, index) {
                 final reversedIndex = notifications.length - 1 - index;
                 return Container(
-                  margin: const EdgeInsets.all(15),
-                  padding: const EdgeInsets.only(left: 15, top: 10, bottom: 10),
-                  width: double.infinity,
-                  height: mediaQuery.height * 0.12,
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 11),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 15,
+                    vertical: 10,
+                  ),
                   decoration: BoxDecoration(
                     color: const Color(0xffCBEFF2),
                     borderRadius: BorderRadius.circular(10),
@@ -109,36 +116,35 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         flex: 1,
                         child: Icon(
                           Icons.notifications,
-                          size: 35,
+                          size: 30,
                           color: Color(0xff0A1128),
                         ),
                       ),
-                      const SizedBox(width: 8),
+                      const SizedBox(width: 25),
                       Expanded(
-                        flex: 14,
+                        flex: 12,
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             Text(
                               notifications[reversedIndex].dataTitle ??
                                   notifications[reversedIndex].title!,
                               style: const TextStyle(
                                 color: Color(0xff0096A4),
-                                fontSize: 20,
+                                fontSize: 17,
                                 fontWeight: FontWeight.bold,
                               ),
-                              textAlign: TextAlign.center,
+                              textAlign: TextAlign.start,
                             ),
                             const SizedBox(height: 5),
                             Text(
                               notifications[reversedIndex].dataBody ??
                                   notifications[reversedIndex].body!,
                               style: const TextStyle(
-                                  color: Color(0xff163A51),
-                                  fontSize: 17,
-                                  overflow: TextOverflow.ellipsis),
-                              textAlign: TextAlign.center,
-                              maxLines: 2,
+                                color: Color(0xff163A51),
+                                fontSize: 14,
+                              ),
+                              textAlign: TextAlign.start,
                             ),
                           ],
                         ),
