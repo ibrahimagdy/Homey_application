@@ -57,7 +57,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             style: const TextStyle(fontSize: 16),
           ),
           background: const Color(0xff0A1128).withOpacity(0.9),
-          duration: const Duration(seconds: 10),
+          duration: const Duration(seconds: 2),
         );
       }
     });
@@ -100,8 +100,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
               itemBuilder: (context, index) {
                 final reversedIndex = notifications.length - 1 - index;
                 return Container(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 11),
+                  margin: const EdgeInsets.only(
+                      left: 20, right: 20, top: 15, bottom: 8),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 15,
                     vertical: 10,
