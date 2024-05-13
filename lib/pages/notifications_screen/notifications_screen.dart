@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:homey/core/caching/hive_manger.dart';
 import 'package:homey/pages/notifications_screen/models/notification_model.dart';
 import 'package:overlay_support/overlay_support.dart';
@@ -113,46 +114,69 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     color: const Color(0xffCBEFF2),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Row(
-                    children: [
-                      const Expanded(
-                        flex: 1,
-                        child: Icon(
-                          Icons.notifications,
-                          size: 30,
-                          color: Color(0xff0A1128),
+                  child: Slidable(
+                    endActionPane: ActionPane(
+                      extentRatio: 0.2,
+                      motion: const DrawerMotion(),
+                      children: [
+                        SlidableAction(
+                          onPressed: (context) async {
+                            setState(() {
+                              HiveManager.getInstance().clearItem(
+                                notifications[reversedIndex],
+                              );
+                              notifications.removeAt(reversedIndex);
+                            });
+                          },
+                          borderRadius: BorderRadius.circular(15),
+                          backgroundColor: const Color(0xFFEC4B4B),
+                          foregroundColor: Colors.white,
+                          icon: Icons.delete,
+                          label: "delete",
                         ),
-                      ),
-                      const SizedBox(width: 25),
-                      Expanded(
-                        flex: 12,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Text(
-                              notifications[reversedIndex].dataTitle ??
-                                  notifications[reversedIndex].title!,
-                              style: const TextStyle(
-                                color: Color(0xff0096A4),
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              textAlign: TextAlign.start,
-                            ),
-                            const SizedBox(height: 5),
-                            Text(
-                              notifications[reversedIndex].dataBody ??
-                                  notifications[reversedIndex].body!,
-                              style: const TextStyle(
-                                color: Color(0xff163A51),
-                                fontSize: 14,
-                              ),
-                              textAlign: TextAlign.start,
-                            ),
-                          ],
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        const Expanded(
+                          flex: 1,
+                          child: Icon(
+                            Icons.notifications,
+                            size: 30,
+                            color: Color(0xff0A1128),
+                          ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(width: 25),
+                        Expanded(
+                          flex: 12,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Text(
+                                notifications[reversedIndex].dataTitle ??
+                                    notifications[reversedIndex].title!,
+                                style: const TextStyle(
+                                  color: Color(0xff0096A4),
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textAlign: TextAlign.start,
+                              ),
+                              const SizedBox(height: 5),
+                              Text(
+                                notifications[reversedIndex].dataBody ??
+                                    notifications[reversedIndex].body!,
+                                style: const TextStyle(
+                                  color: Color(0xff163A51),
+                                  fontSize: 14,
+                                ),
+                                textAlign: TextAlign.start,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
