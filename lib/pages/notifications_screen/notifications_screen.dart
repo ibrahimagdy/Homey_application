@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:homey/core/caching/hive_manger.dart';
 import 'package:homey/pages/notifications_screen/models/notification_model.dart';
 import 'package:overlay_support/overlay_support.dart';
 
@@ -46,6 +47,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
         dataBody: message.data['body'],
       );
       setState(() {
+        HiveManager.getInstance().cacheData(notification);
         notifications.add(notification);
       });
       if (notification != null) {
@@ -65,6 +67,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   @override
   void initState() {
+    notifications = HiveManager.getInstance().retrieveData();
     registerNotification();
     super.initState();
   }

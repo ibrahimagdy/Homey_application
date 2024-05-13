@@ -17,6 +17,7 @@ import 'package:homey/pages/splash_screen/splash_screen.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 
+import 'core/caching/hive_manger.dart';
 import 'firebase_options.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -26,9 +27,12 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  // FCM.fcmInit();
-  runApp(const MyApp());
-  configLoading();
+  Future.wait([
+    HiveManager.init(),
+  ]).then((_) {
+    configLoading();
+    runApp(const MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {
