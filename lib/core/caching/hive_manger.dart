@@ -37,4 +37,9 @@ class HiveManager {
     var box = Hive.box<NotificationModel>(_boxKey);
     return box.values.toList();
   }
+
+  void clearItem<NotificationModel>(NotificationModel dataItem) async {
+    var box = Hive.box<NotificationModel>(_boxKey);
+    await box.clear();
+  }
 }
