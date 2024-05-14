@@ -103,38 +103,38 @@ class _NotificationScreenState extends State<NotificationScreen> {
               itemCount: notifications.length,
               itemBuilder: (context, index) {
                 final reversedIndex = notifications.length - 1 - index;
-                return Container(
-                  margin: const EdgeInsets.only(
-                      left: 20, right: 20, top: 15, bottom: 8),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 15,
-                    vertical: 10,
+                return Slidable(
+                  endActionPane: ActionPane(
+                    extentRatio: 0.25,
+                    motion: const DrawerMotion(),
+                    children: [
+                      SlidableAction(
+                        onPressed: (context) async {
+                          setState(() {
+                            HiveManager.getInstance().clearItem(
+                              notifications[reversedIndex],
+                            );
+                            notifications.removeAt(reversedIndex);
+                          });
+                        },
+                        borderRadius: BorderRadius.circular(15),
+                        backgroundColor: const Color(0xFFEC4B4B),
+                        foregroundColor: Colors.white,
+                        icon: Icons.delete,
+                        label: "delete",
+                      ),
+                    ],
                   ),
-                  decoration: BoxDecoration(
-                    color: const Color(0xffCBEFF2),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Slidable(
-                    endActionPane: ActionPane(
-                      extentRatio: 0.2,
-                      motion: const DrawerMotion(),
-                      children: [
-                        SlidableAction(
-                          onPressed: (context) async {
-                            setState(() {
-                              HiveManager.getInstance().clearItem(
-                                notifications[reversedIndex],
-                              );
-                              notifications.removeAt(reversedIndex);
-                            });
-                          },
-                          borderRadius: BorderRadius.circular(15),
-                          backgroundColor: const Color(0xFFEC4B4B),
-                          foregroundColor: Colors.white,
-                          icon: Icons.delete,
-                          label: "delete",
-                        ),
-                      ],
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                        left: 20, right: 20, top: 15, bottom: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 15,
+                      vertical: 10,
+                    ),
+                    decoration: BoxDecoration(
+                      color: const Color(0xffCBEFF2),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     child: Row(
                       children: [

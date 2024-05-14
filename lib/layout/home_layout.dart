@@ -25,6 +25,7 @@ class _HomeLayoutState extends State<HomeLayout> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xff0A1128),
       body: screens[selectedIndex],
       bottomNavigationBar: Container(
