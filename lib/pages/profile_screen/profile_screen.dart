@@ -59,6 +59,7 @@ class _ProfileViewState extends State<ProfileView> {
     var email = FirebaseAuth.instance.currentUser?.email;
     var name = FirebaseAuth.instance.currentUser?.displayName ?? "";
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xff0A1128),
       body: SafeArea(
         child: Form(
@@ -137,7 +138,7 @@ class _ProfileViewState extends State<ProfileView> {
                 ),
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+                  const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
                   child: Row(
                     children: [
                       const Icon(
@@ -220,7 +221,7 @@ class _ProfileViewState extends State<ProfileView> {
                       title: Text(
                         "Notifications",
                         style:
-                            TextStyle(color: Color(0xff0096A4), fontSize: 18),
+                        TextStyle(color: Color(0xff0096A4), fontSize: 18),
                       ),
                       trailing: Icon(
                         Icons.navigate_next,
@@ -256,7 +257,7 @@ class _ProfileViewState extends State<ProfileView> {
                       title: Text(
                         "About",
                         style:
-                            TextStyle(color: Color(0xff0096A4), fontSize: 18),
+                        TextStyle(color: Color(0xff0096A4), fontSize: 18),
                       ),
                       trailing: Icon(
                         Icons.navigate_next,
@@ -287,7 +288,7 @@ class _ProfileViewState extends State<ProfileView> {
                       title: Text(
                         "Logout",
                         style:
-                            TextStyle(color: Color(0xffEA2929), fontSize: 18),
+                        TextStyle(color: Color(0xffEA2929), fontSize: 18),
                       ),
                       trailing: Icon(
                         Icons.navigate_next,
@@ -307,7 +308,7 @@ class _ProfileViewState extends State<ProfileView> {
                       title: Text(
                         "Delete account",
                         style:
-                            TextStyle(color: Color(0xffEA2929), fontSize: 18),
+                        TextStyle(color: Color(0xffEA2929), fontSize: 18),
                       ),
                       trailing: Icon(
                         Icons.navigate_next,
