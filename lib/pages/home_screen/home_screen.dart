@@ -17,6 +17,8 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   int selectedIndex = 0;
   String searchQuery = "";
+  late String? name;
+  late String? image;
 
   List<ApartmentModel> apartments = [
     const ApartmentModel(
@@ -27,7 +29,7 @@ class _HomeViewState extends State<HomeView> {
       propertyType: "Apartment",
       propertyArea: "90 m",
       description:
-      "Welcome to this beautifully maintained, spacious 2-bedroom apartment located in the bustling heart of the city. This apartment is available for rent and offers a unique blend of comfort, style, and convenience",
+          "Welcome to this beautifully maintained, spacious 2-bedroom apartment located in the bustling heart of the city. This apartment is available for rent and offers a unique blend of comfort, style, and convenience",
       bedrooms: 2,
       bathrooms: 1,
       kitchens: 1,
@@ -225,9 +227,6 @@ class _HomeViewState extends State<HomeView> {
           .toList();
     }
   }
-
-  late String? name;
-  late String? image;
 
   @override
   void initState() {
