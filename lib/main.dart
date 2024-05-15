@@ -20,7 +20,6 @@ import 'package:provider/provider.dart';
 import 'core/caching/hive_manger.dart';
 import 'firebase_options.dart';
 
-final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,7 +45,6 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           initialRoute: SplashScreen.routeName,
-          navigatorKey: navigatorKey,
           routes: {
             SplashScreen.routeName: (context) => const SplashScreen(),
             OnBoarding.routeName: (context) => const OnBoarding(),

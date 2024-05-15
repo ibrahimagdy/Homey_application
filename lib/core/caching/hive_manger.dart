@@ -6,13 +6,12 @@ class HiveManager {
 
   static HiveManager? _instance;
 
-
   static HiveManager getInstance() {
     _instance ??= HiveManager._();
     return _instance!;
   }
 
-  static String _boxKey = "Notifications";
+  static const String _boxKey = "Notifications";
 
   static Future<void> init() async {
     await Hive.initFlutter();
