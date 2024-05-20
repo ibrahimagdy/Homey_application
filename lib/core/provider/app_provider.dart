@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:homey/pages/home_screen/models/apartments_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AppProvider extends ChangeNotifier {
+  SharedPreferences prefs;
   List<ApartmentModel> favorites = [];
   String? imageUrl;
+
+  AppProvider(this.prefs);
 
   List<ApartmentModel> get _favorites => favorites;
 
