@@ -1,7 +1,10 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:homey/pages/onBoarding_screens/onboarding_screens.dart';
+
+import '../../layout/home_layout.dart';
 
 class SplashScreen extends StatefulWidget {
   static const String routeName = "splash";
@@ -16,9 +19,18 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     Timer(const Duration(seconds: 3), () {
-      Navigator.pushReplacementNamed(context, OnBoarding.routeName);
+      checkLoggedInUser();
     });
     super.initState();
+  }
+
+  Future<void> checkLoggedInUser() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      Navigator.pushReplacementNamed(context, HomeLayout.routeName);
+    } else {
+      Navigator.pushReplacementNamed(context, OnBoarding.routeName);
+    }
   }
 
   @override

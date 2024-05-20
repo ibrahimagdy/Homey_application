@@ -16,6 +16,7 @@ import 'package:homey/pages/register_screen/register_screen.dart';
 import 'package:homey/pages/splash_screen/splash_screen.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/caching/hive_manger.dart';
 import 'firebase_options.dart';
@@ -23,6 +24,7 @@ import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -30,7 +32,12 @@ void main() async {
     HiveManager.init(),
   ]).then((_) {
     configLoading();
-    runApp(const MyApp());
+    runApp(
+      ChangeNotifierProvider(
+        create: (context) => AppProvider(prefs),
+        child: const MyApp(),
+      ),
+    );
   });
 }
 
@@ -39,29 +46,25 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => AppProvider(),
-      child: OverlaySupport(
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          initialRoute: SplashScreen.routeName,
-          routes: {
-            SplashScreen.routeName: (context) => const SplashScreen(),
-            OnBoarding.routeName: (context) => const OnBoarding(),
-            LoginScreen.routeName: (context) => const LoginScreen(),
-            RegisterScreen.routeName: (context) => const RegisterScreen(),
-            HomeLayout.routeName: (context) => const HomeLayout(),
-            DetailsScreen.routeName: (context) => const DetailsScreen(),
-            MapScreen.routeName: (context) => const MapScreen(),
-            AboutUsScreen.routeName: (context) => const AboutUsScreen(),
-            NotificationScreen.routeName: (context) =>
-                const NotificationScreen(),
-          },
-          builder: EasyLoading.init(
-            builder: BotToastInit(),
-          ),
-          theme: ApplicationTheme.appTheme,
+    return OverlaySupport(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        initialRoute: SplashScreen.routeName,
+        routes: {
+          SplashScreen.routeName: (context) => const SplashScreen(),
+          OnBoarding.routeName: (context) => const OnBoarding(),
+          LoginScreen.routeName: (context) => const LoginScreen(),
+          RegisterScreen.routeName: (context) => const RegisterScreen(),
+          HomeLayout.routeName: (context) => const HomeLayout(),
+          DetailsScreen.routeName: (context) => const DetailsScreen(),
+          MapScreen.routeName: (context) => const MapScreen(),
+          AboutUsScreen.routeName: (context) => const AboutUsScreen(),
+          NotificationScreen.routeName: (context) => const NotificationScreen(),
+        },
+        builder: EasyLoading.init(
+          builder: BotToastInit(),
         ),
+        theme: ApplicationTheme.appTheme,
       ),
     );
   }
